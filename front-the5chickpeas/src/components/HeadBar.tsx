@@ -21,7 +21,7 @@ function HeadBar() {
                 {/* ? get user's notification */}
                 {/* ? log out link */}
                 <ProfilStyled src={profil} alt="profil" />
-                {/* LINK ? */}
+                {/* LINK LOG OUT ? */}
                 <h3>Welcome User</h3>
             </div>
         </HeadBarStyled>

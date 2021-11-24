@@ -9,6 +9,7 @@ import {
     BrowserRouter,
     Routes,
     Route } from "react-router-dom";
+import ValidateAccount from './pages/ValidateAccount';
 
 function App() {
   return (
@@ -16,8 +17,8 @@ function App() {
         <GlobalStyle />
         <BrowserRouter>
             <Routes>
-                {/* <Route path="/validateAccount" element={<ValidateAccount />} /> */}
                 <Route path="/" element={<Homepage/>} />
+                <Route path="/validate-account" element={<ValidateAccount />}></Route>
             </Routes>
         </BrowserRouter>
     </div>
