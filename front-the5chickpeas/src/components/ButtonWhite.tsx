@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 export interface ButtonInterface {
     value: string;
-    // type: string;
 }
 
 function Button(props: ButtonInterface): JSX.Element {
@@ -21,6 +20,10 @@ const BtnStyled = styled.button`
     background-color: #fff;
     border: none;
     border-radius: 20px;
+    cursor: pointer;
+    &:hover{
+        color: #FABB18;
+    }
 `;
 
 export default Button;
