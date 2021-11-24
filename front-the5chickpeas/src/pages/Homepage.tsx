@@ -1,19 +1,33 @@
 import React from 'react';
 // styles
-import { Container } from './styles';
+import { BtnBlack, Container } from './styles';
 import styled from 'styled-components';
 // img
 import logo from '../images/Logo.svg';
 import view from '../images/view.png';
 // components
-import HeadBar from './../components/HeadBar';
-import ButtonBlack from '../components/ButtonBlack';
+// import HeadBar from '../components/HeadBar';
+import { BtnWhite } from './styles';
+// react router 
+import { Link } from 'react-router-dom';
 
 function Homepage() {
     return (
         <>
             <Container>
-                <HeadBar />
+                <NavBarStyled>
+                    <div>
+                        <Link id="logo" to="/">
+                            <img src={logo} alt="5 chickpeas"/>
+                        </Link>
+                        <span>WildMine</span>
+                    </div>
+                    <div>
+                        <BtnWhite>Login</BtnWhite>
+                        <BtnWhite>Sign up</BtnWhite>
+                    </div>
+                </NavBarStyled>
+                {/* <HeadBar /> */}
                 <MainStyled>
                     <h1>More than a job. It's a way of working together</h1>
                     <ContentStyled>
@@ -26,12 +40,37 @@ function Homepage() {
                         </LeftBoxStyled>
                         <ViewStyled src={view} alt="Wildmine view" />
                     </ContentStyled>
-                    <ButtonBlack value="Start now !" />
+                    <BtnStartNow>Start now !</BtnStartNow>
                 </MainStyled>
             </Container>
         </>
     )
 }
+
+const NavBarStyled = styled.nav`
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.5em;
+    color: "#000";
+    background-color: #FABB18;
+    width: 100%;
+    height: 80px;
+    img{
+        max-height: calc(80px - 2rem);
+        margin: 1rem;
+    }
+    div {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+`;
 
 const ContentStyled = styled.div`
     display: flex;
@@ -61,4 +100,10 @@ const ViewStyled = styled.img`
     max-width: 800px;
 `;
 
+const BtnStartNow = styled(BtnBlack)`
+    margin: 1rem;
+    padding: 1rem 3rem;
+    border-radius: 30px;
+    font-size: 1.2rem;
+`;
 export default Homepage;

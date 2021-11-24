@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+// images
 import logo from '../images/Logo.svg';
-import Button from './ButtonWhite';
+import profil from '../images/profil.png';
 import { Link } from 'react-router-dom';
 
 function HeadBar() {
@@ -14,8 +15,14 @@ function HeadBar() {
                 <span>WildMine</span>
             </div>
             <div>
-                <Button value="Login"/>
-                <Button value="Sign up"/>
+                {/* ? if user is log in show profil */}
+                {/* get user's photo */}
+                {/* get user's name */}
+                {/* ? get user's notification */}
+                {/* ? log out link */}
+                <ProfilStyled src={profil} alt="profil" />
+                {/* LINK ? */}
+                <h3>Welcome User</h3>
             </div>
         </HeadBarStyled>
     )
@@ -29,6 +36,7 @@ const HeadBarStyled = styled.nav`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    padding: 0 2rem;
     font-size: 1.5em;
     color: "#000";
     background-color: #FABB18;
@@ -36,7 +44,7 @@ const HeadBarStyled = styled.nav`
     height: 80px;
     img{
         max-height: calc(80px - 2rem);
-        margin: 1rem;
+        margin-right: 1rem;
     }
     div {
         display: flex;
@@ -46,8 +54,9 @@ const HeadBarStyled = styled.nav`
     }
 `;
 
-// const LogoStyled = styled.div`
-//     cursor: pointer;
-// `;
+const ProfilStyled = styled.img`
+    border-radius: 50%;
+    max-width: 50px;
+`;
 
 export default HeadBar;
