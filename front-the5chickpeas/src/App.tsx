@@ -1,6 +1,8 @@
 import React from 'react';
 // pages
 import Homepage from './pages/Homepage';
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
 // import ValidateAccount from './pages/Homepage';
 // styles
 import GlobalStyle from './components/Global';
@@ -10,7 +12,7 @@ import {
     Routes,
     Route } from "react-router-dom";
 import ValidateAccount from './pages/ValidateAccount';
-import Profil from './pages/Profil';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -19,7 +21,9 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Homepage />} />
-                <Route path="/profil" element={<Profil />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/signup" element={<SignUp/>} />
+                <Route path="/login" element={<Login/>} />
                 <Route path="/validate-account/{token}" element={<ValidateAccount />}></Route>
             </Routes>
         </BrowserRouter>
