@@ -10,7 +10,12 @@ import documentsFolder from '../images/icons/documents-folder.png'
 
 function SideBar() {
     return (
+        
         <SideBarStyled>
+            <LinksSideBar href="#" >
+                <img src={projectManagement} alt={projectManagement}/>
+                <p>Dashboard</p>
+            </LinksSideBar>
             <LinksSideBar href="#" >
                 <img src={clipboard} alt={clipboard}/>
                 <p>Projects List</p>
@@ -19,17 +24,13 @@ function SideBar() {
                 <img src={documentsFolder} alt={documentsFolder}/>
                 <p>Tasks List</p>
             </LinksSideBar>
-            <LinksSideBar href="#" >
-                <img src={projectManagement} alt={projectManagement}/>
-                <p>Project Management</p>
-            </LinksSideBar>
             <LinksSideBar href="#">
                 <img src={user} alt={user}/>
-                <p>User</p>
+                <p>User Settings</p>
             </LinksSideBar>
             <LinksSideBar href="#" >
                 <img src={gear} alt={gear}/>
-                <p>Settings</p>
+                <p>Miscellanious</p>
             </LinksSideBar>
             
         </SideBarStyled>

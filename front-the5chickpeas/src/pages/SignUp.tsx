@@ -32,6 +32,7 @@ const SignUp = () => {
                     if (result.data.success) {
                         setError('');
                     } */
+                    console.log('submiiiiited', pseudo, email, password)
                     }}
                 >
                     <Input
