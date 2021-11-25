@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import logo from '../images/Logo.svg';
 import view from '../images/view.png';
 // components
-// import HeadBar from '../components/HeadBar';
 import { BtnWhite } from './styles';
 // react router 
 import { Link } from 'react-router-dom';
@@ -27,7 +26,6 @@ function Homepage() {
                         <BtnWhite>Sign up</BtnWhite>
                     </div>
                 </NavBarStyled>
-                {/* <HeadBar /> */}
                 <MainStyled>
                     <h1>More than a job. It's a way of working together</h1>
                     <ContentStyled>

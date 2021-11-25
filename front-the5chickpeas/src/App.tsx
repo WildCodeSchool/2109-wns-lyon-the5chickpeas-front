@@ -10,6 +10,7 @@ import {
     Routes,
     Route } from "react-router-dom";
 import ValidateAccount from './pages/ValidateAccount';
+import Profil from './pages/Profil';
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
         <GlobalStyle />
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Homepage/>} />
+                <Route path="/" element={<Homepage />} />
+                <Route path="/profil" element={<Profil />} />
                 <Route path="/validate-account/{token}" element={<ValidateAccount />}></Route>
             </Routes>
         </BrowserRouter>
