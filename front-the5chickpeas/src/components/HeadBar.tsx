@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import logo from '../assets/img/Logo.svg';
-import Button from './Button';
+import logo from '../images/Logo.svg';
+import ButtonYellow from './ButtonYellow';
 
 const HeadBarStyled = styled.nav`
     display: flex;
@@ -33,8 +33,8 @@ function HeadBar() {
                 <span>WildMine</span>
             </div>
             <div>
-                <Button value="Login"/>
-                <Button value="Sign up"/>
+                <ButtonYellow value="Login"/>
+                <ButtonYellow value="Sign up"/>
             </div>
         </HeadBarStyled>
     )

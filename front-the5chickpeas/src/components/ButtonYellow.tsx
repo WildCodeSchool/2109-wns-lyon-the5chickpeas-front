@@ -3,24 +3,23 @@ import styled from 'styled-components';
 
 export interface ButtonInterface {
     value: string;
-    // type: string;
 }
 
-function Button(props: ButtonInterface): JSX.Element {
+function ButtonYellow(props: ButtonInterface): JSX.Element {
     return (
-        <BtnStyled>
+        <BtnYellowStyled>
             {props.value}
-        </BtnStyled>
+        </BtnYellowStyled>
     )
 }
 
-const BtnStyled = styled.button`
+const BtnYellowStyled = styled.button`
     margin-right: 1rem;
     padding: .8rem 2rem;
     color:#000;
-    background-color: #fff;
+    background-color: #FABB18;
     border: none;
     border-radius: 20px;
 `;
 
-export default Button;
+export default ButtonYellow;
