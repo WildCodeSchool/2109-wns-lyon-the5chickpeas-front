@@ -1,7 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import logo from '../images/Logo.svg';
-import ButtonYellow from './ButtonYellow';
 import clipboard from '../images/icons/clipboard.png'
 import user from '../images/icons/user.png'
 import gear from '../images/icons/gear.png'
