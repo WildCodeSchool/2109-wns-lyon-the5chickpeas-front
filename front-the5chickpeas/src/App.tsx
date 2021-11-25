@@ -22,7 +22,7 @@ function App() {
                 <Route path="/" element={<Homepage/>} />
                 <Route path="/signup" element={<SignUp/>} />
                 <Route path="/login" element={<Login/>} />
-                <Route path="/validate-account/{token}" element={<ValidateAccount />}></Route>
+                <Route path="/validate-account/:token" element={<ValidateAccount />}></Route>
             </Routes>
         </BrowserRouter>
     </div>
