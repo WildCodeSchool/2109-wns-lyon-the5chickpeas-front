@@ -54,7 +54,7 @@ function ValidateAccount() {
 
     return (
         <div>
-           <p>Route to validate Account</p> 
+            <p>Route to validate Account</p> 
         </div>
     )
 }
