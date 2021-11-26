@@ -23,8 +23,12 @@ function Homepage() {
                         <span>WildMine</span>
                     </div>
                     <div>
+                    <Link to="/login">
                         <BtnWhite>Login</BtnWhite>
+                    </Link>
+                    <Link to="/signup">
                         <BtnWhite>Sign up</BtnWhite>
+                    </Link>
                     </div>
                 </NavBarStyled>
                 {/* <HeadBar /> */}
@@ -40,7 +44,9 @@ function Homepage() {
                         </LeftBoxStyled>
                         <ViewStyled src={view} alt="Wildmine view" />
                     </ContentStyled>
+                    <Link to="/signup">
                     <BtnStartNow>Start now !</BtnStartNow>
+                </Link>
                 </MainStyled>
             </Container>
         </>
