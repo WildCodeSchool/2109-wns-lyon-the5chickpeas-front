@@ -6,44 +6,46 @@ import styled from 'styled-components';
 import logo from '../images/Logo.svg';
 import view from '../images/view.png';
 // components
-// import HeadBar from '../components/HeadBar';
 import { BtnWhite } from './styles';
 // react router 
 import { Link } from 'react-router-dom';
 
 function Homepage() {
     return (
-        <>
-            <Container>
-                <NavBarStyled>
-                    <div>
-                        <Link id="logo" to="/">
-                            <img src={logo} alt="5 chickpeas"/>
-                        </Link>
-                        <span>WildMine</span>
-                    </div>
-                    <div>
+        <Container>
+            <NavBarStyled>
+                <div>
+                    <Link id="logo" to="/">
+                        <img src={logo} alt="5 chickpeas"/>
+                    </Link>
+                    <span>WildMine</span>
+                </div>
+                <div>
+                    <Link to="/login">
                         <BtnWhite>Login</BtnWhite>
+                    </Link>
+                    <Link to="/signup">
                         <BtnWhite>Sign up</BtnWhite>
-                    </div>
-                </NavBarStyled>
-                {/* <HeadBar /> */}
-                <MainStyled>
-                    <h1>More than a job. It's a way of working together</h1>
-                    <ContentStyled>
-                        <LeftBoxStyled>
-                            <h2>Collaborate, manage projects and reach new heights in productivity with <span>WildMine</span>.</h2>
-                            <div>
-                                <h2>Developed by</h2>
-                                <img src={logo} alt="5 chickpeas" />
-                            </div>
-                        </LeftBoxStyled>
-                        <ViewStyled src={view} alt="Wildmine view" />
-                    </ContentStyled>
+                    </Link>
+                </div>
+            </NavBarStyled>
+            <MainStyled>
+                <h1>More than a job. It's a way of working together</h1>
+                <ContentStyled>
+                    <LeftBoxStyled>
+                        <h2>Collaborate, manage projects and reach new heights in productivity with <span>WildMine</span>.</h2>
+                        <div>
+                            <h2>Developed by</h2>
+                            <img src={logo} alt="5 chickpeas" />
+                        </div>
+                    </LeftBoxStyled>
+                    <ViewStyled src={view} alt="Wildmine view" />
+                </ContentStyled>
+                <Link to="/signup">
                     <BtnStartNow>Start now !</BtnStartNow>
-                </MainStyled>
-            </Container>
-        </>
+                </Link>
+            </MainStyled>
+        </Container>
     )
 }
 

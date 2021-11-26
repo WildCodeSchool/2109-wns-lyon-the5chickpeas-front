@@ -6,7 +6,13 @@ import reportWebVitals from './reportWebVitals';
 import {
   ApolloClient,
   InMemoryCache,
+<<<<<<< HEAD
+  ApolloProvider,
+  // useQuery,
+  // gql
+=======
   ApolloProvider
+>>>>>>> 33f98e3392b79c64b7e828644dff156fa6d59c48
 } from "@apollo/client";
 
 const client = new ApolloClient({
