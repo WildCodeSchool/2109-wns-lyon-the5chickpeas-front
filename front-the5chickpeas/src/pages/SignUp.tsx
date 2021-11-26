@@ -6,30 +6,32 @@ import '../App.css'
 import {
     gql,
     useMutation
-  } from "@apollo/client";
+} from "@apollo/client";
 //import { useHistory } from 'react-router-dom'; // replace by useNavigate in react-router-dom V6 
 import { useNavigate } from 'react-router-dom';
 
 
 const SignUp = () => {
 
-    //const [ pseudo, setPseudo] = useState('')
+    const [ pseudo, setPseudo] = useState('')
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
-    //const [ confPassword, setConfPassword ] = useState('')
+    const [ confPassword, setConfPassword ] = useState('')
     const [ isSaved, setIsSaved ] = useState(false)
+    const [ validAccountToken, setValidAccountToken] = useState('')
     //const [ error, setError ] = useState('')
 
     const navigate = useNavigate();
 
     const [signup, { data, loading, error }] = useMutation(gql`
-    mutation Signup($password: String!, $email: String!) {
-    signup(password: $password, email: $email) {
-    id
-    email
-    password
-    }
-}
+    mutation Signup($pseudo: String!, $password: String!, $email: String!, $validAccountToken: String!) {
+    signup(pseudo: $pseudo, password: $password, email: $email, validAccountToken: $validAccountToken) {
+        pseudo
+        password
+        email
+        validAccountToken
+        }
+    }   
     ` 
 );
 
@@ -52,12 +54,13 @@ const SignUp = () => {
                     if (result.data.success) {
                         setError('');
                     } */
-                    console.log('info from form', /* pseudo, */ email);
-                    signup({variables:{email: email, password:password},
+                    console.log('info from form', pseudo, email);
+                    signup({variables:{email: email, pseudo: pseudo, password:password, validAccountToken:validAccountToken},
                     });
-                    //setPseudo('');
                     setEmail('');
+                    setPseudo('');
                     setPassword('');
+                    setValidAccountToken('');
                     setIsSaved(true);
                     navigate('/profile');
                     console.log('data:', data, isSaved)
@@ -65,15 +68,6 @@ const SignUp = () => {
                 
                     }}
                 >
-{/*                     <Input
-                        id="pseudo-input"
-                        type="text"
-                        placeholder="Pseudo"
-                        value={pseudo}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setPseudo(e.target.value)
-                        }
-                    /> */}
                     <Input
                         id="email-input"
                         type="text"
@@ -81,6 +75,15 @@ const SignUp = () => {
                         value={email}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         setEmail(e.target.value)
+                        }
+                    />
+                    <Input
+                        id="pseudo-input"
+                        type="text"
+                        placeholder="Pseudo"
+                        value={pseudo}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setPseudo(e.target.value)
                         }
                     />
                     <Input
@@ -92,7 +95,7 @@ const SignUp = () => {
                         setPassword(e.target.value)
                         }
                     />
-{/*                     <Input
+                    <Input
                         id="confPassword-input"
                         type="password"
                         placeholder="Confirme your password"
@@ -100,7 +103,7 @@ const SignUp = () => {
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         setConfPassword(e.target.value)
                         }
-                    /> */}
+                    />
                     {/*  {error !== '' && <Error>{error}</Error>} */}
                     <ButtonSignUp>Sign Up</ButtonSignUp>
                     <a href='/login'>Already have an account? Sign in!</a>

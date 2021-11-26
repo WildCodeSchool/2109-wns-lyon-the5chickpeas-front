@@ -22,7 +22,7 @@ function HeadBar() {
                 {/* ? log out link */}
                 <ProfileStyled src={profile} alt="profile" />
                 {/* LINK LOG OUT ? */}
-                <h3>Welcome User</h3>
+                <h3>Welcome </h3>
             </div>
         </HeadBarStyled>
     )
