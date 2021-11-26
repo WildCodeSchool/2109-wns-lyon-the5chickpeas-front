@@ -73,8 +73,7 @@ const Profile = () => {
                             }
                         />
                         {/*  {error !== '' && <Error>{error}</Error>} */}
-                        <ButtonSignUp>Sign Up</ButtonSignUp>
-                        <p><u>Already have an account? Sign in!</u></p>
+                        <ButtonSignUp>Update</ButtonSignUp>
                     </NewForm>
                
             </Main>
