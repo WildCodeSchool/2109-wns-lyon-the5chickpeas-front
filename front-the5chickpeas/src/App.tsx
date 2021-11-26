@@ -3,6 +3,7 @@ import React from 'react';
 import Homepage from './pages/Homepage';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
+import Profile from './pages/Profile';
 // import ValidateAccount from './pages/Homepage';
 // styles
 import GlobalStyle from './components/Global';
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/" element={<Homepage/>} />
                 <Route path="/signup" element={<SignUp/>} />
                 <Route path="/login" element={<Login/>} />
+                <Route path="/profile" element={<Profile/>} />
                 <Route path="/validate-account/:token" element={<ValidateAccount />}></Route>
             </Routes>
         </BrowserRouter>

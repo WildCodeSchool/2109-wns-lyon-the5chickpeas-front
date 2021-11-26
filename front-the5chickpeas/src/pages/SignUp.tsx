@@ -3,15 +3,35 @@ import { Container } from './styles'
 import { Input, Form, ButtonSignUp } from '../components/FormElements';
 import logo from '../images/Logo.svg';
 import '../App.css'
+import {
+    gql,
+    useMutation
+  } from "@apollo/client";
+//import { useHistory } from 'react-router-dom'; // replace by useNavigate in react-router-dom V6 
+import { useNavigate } from 'react-router-dom';
 
 
 const SignUp = () => {
 
-    const [ pseudo, setPseudo] = useState('')
+    //const [ pseudo, setPseudo] = useState('')
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
-    const [ confPassword, setConfPassword ] = useState('')
-    const [ error, setError ] = useState('')
+    //const [ confPassword, setConfPassword ] = useState('')
+    const [ isSaved, setIsSaved ] = useState(false)
+    //const [ error, setError ] = useState('')
+
+    const navigate = useNavigate();
+
+    const [signup, { data, loading, error }] = useMutation(gql`
+    mutation Signup($password: String!, $email: String!) {
+    signup(password: $password, email: $email) {
+    id
+    email
+    password
+    }
+}
+    ` 
+);
 
     return (
         <>
@@ -32,10 +52,20 @@ const SignUp = () => {
                     if (result.data.success) {
                         setError('');
                     } */
-                    console.log('submiiiiited', pseudo, email, password)
+                    console.log('info from form', /* pseudo, */ email);
+                    signup({variables:{email: email, password:password},
+                    });
+                    //setPseudo('');
+                    setEmail('');
+                    setPassword('');
+                    setIsSaved(true);
+                    navigate('/profile');
+                    console.log('data:', data, isSaved)
+
+                
                     }}
                 >
-                    <Input
+{/*                     <Input
                         id="pseudo-input"
                         type="text"
                         placeholder="Pseudo"
@@ -43,7 +73,7 @@ const SignUp = () => {
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         setPseudo(e.target.value)
                         }
-                    />
+                    /> */}
                     <Input
                         id="email-input"
                         type="text"
@@ -62,7 +92,7 @@ const SignUp = () => {
                         setPassword(e.target.value)
                         }
                     />
-                    <Input
+{/*                     <Input
                         id="confPassword-input"
                         type="password"
                         placeholder="Confirme your password"
@@ -70,10 +100,11 @@ const SignUp = () => {
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         setConfPassword(e.target.value)
                         }
-                    />
+                    /> */}
                     {/*  {error !== '' && <Error>{error}</Error>} */}
                     <ButtonSignUp>Sign Up</ButtonSignUp>
-                    <p><u>Already have an account? Sign in!</u></p>
+                    <a href='/login'>Already have an account? Sign in!</a>
+                    
                 </Form>
             </Container>
         </>
