@@ -53,7 +53,8 @@ const Login = () => {
                     />
                     {error !== '' && {error}} 
                     <ButtonSignUp>Login</ButtonSignUp>
-                    <p><u>No account? Sign up now!</u></p>
+                    <a href='/signup'>No account? Sign up now!</a>
+                    
                 </Form>
             </Container>
         </>
