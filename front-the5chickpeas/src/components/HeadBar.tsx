@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 // images
 import logo from '../images/Logo.svg';
-import profil from '../images/profil.png';
+import profile from '../images/profile.png';
 import { Link } from 'react-router-dom';
 
 function HeadBar() {
@@ -15,14 +15,14 @@ function HeadBar() {
                 <span>WildMine</span>
             </div>
             <div>
-                {/* ? if user is log in show profil */}
+                {/* ? if user is log in show profile */}
                 {/* get user's photo */}
                 {/* get user's name */}
                 {/* ? get user's notification */}
                 {/* ? log out link */}
-                <ProfilStyled src={profil} alt="profil" />
+                <ProfileStyled src={profile} alt="profile" />
                 {/* LINK LOG OUT ? */}
-                <h3>Welcome User</h3>
+                <h3>Welcome </h3>
             </div>
         </HeadBarStyled>
     )
@@ -54,7 +54,7 @@ const HeadBarStyled = styled.nav`
     }
 `;
 
-const ProfilStyled = styled.img`
+const ProfileStyled = styled.img`
     border-radius: 50%;
     max-width: 50px;
 `;

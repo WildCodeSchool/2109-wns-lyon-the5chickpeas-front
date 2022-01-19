@@ -34,6 +34,18 @@ const GlobalStyle = createGlobalStyle`
     p {
         font-size: 1rem;
     }
+
+    .flex {
+        display: flex;
+        &-column {
+            flex-direction: column;
+            align-items: center;
+        }
+        &-row {
+            flex-direction: row;
+            align-items: center;
+        }
+    }
 `;
 
 export default GlobalStyle;

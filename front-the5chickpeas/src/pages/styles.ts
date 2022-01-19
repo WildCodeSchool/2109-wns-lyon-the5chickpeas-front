@@ -1,7 +1,15 @@
 import styled from "styled-components";
+//import Ellipse from '../images/Ellipse1'
 
 export const Container = styled.div`
     margin: 0 1rem;
+    background-color: #FFF;
+
+`;
+
+export const ContainerLogin = styled(Container)`
+    background-image: url('../images/Ellipse1');
+    
 `;
 
 // -------------- Base btn ----------------
