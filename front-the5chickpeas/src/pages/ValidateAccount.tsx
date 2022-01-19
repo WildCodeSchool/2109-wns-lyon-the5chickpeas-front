@@ -23,6 +23,7 @@ function ValidateAccount() {
         variables: {
             validAccountToken: token
         }
+        
     });
 
     useEffect(() => {
