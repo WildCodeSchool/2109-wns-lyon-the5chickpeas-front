@@ -23,6 +23,7 @@
   },
   "scripts": {
     "docker": "docker-compose -f docker-compose.dev.yml up --build",
+    "dockerprod": "docker-compose -f docker-compose.prod.yml up --build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
