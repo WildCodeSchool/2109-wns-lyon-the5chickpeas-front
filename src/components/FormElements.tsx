@@ -9,7 +9,7 @@ export const Form = styled.form`
     justify-content: center;
     align-items: center;
     padding: 30px;
-    
+    margin: auto;
 `;
 
 export const Input = styled.input`
@@ -17,6 +17,7 @@ export const Input = styled.input`
     width: 539px;
     height: 80px;
     margin: 30px;
+    padding: 0 10px;
     font-size: 25px;
     background: #FFFFFF;
     box-shadow: 0px 0px 30px 5px rgba(0, 0, 0, 0.2);

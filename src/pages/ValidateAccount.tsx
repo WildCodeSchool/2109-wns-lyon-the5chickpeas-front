@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react'
 import {
+    // ApolloClient,
+    // InMemoryCache,
+    // ApolloProvider,
     useMutation,
     gql
   } from "@apollo/client";
@@ -20,6 +23,7 @@ function ValidateAccount() {
         variables: {
             validAccountToken: token
         }
+        
     });
 
     useEffect(() => {
