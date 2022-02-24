@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const StyledTable = styled.table`
+  margin-top: 40px;
   border: 1px solid black;
-  
   border-radius: 15px;
   width: 100%;
   font-size: 22px;
@@ -31,7 +31,7 @@ export const StyledTable = styled.table`
 
 
   td{
-    
+    justify-content: "center"
   }
 
 `

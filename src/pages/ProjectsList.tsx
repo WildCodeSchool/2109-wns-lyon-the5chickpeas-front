@@ -8,6 +8,8 @@ import SideBar from '../components/SideBar';
 
 //import { Input, Form, ButtonSignUp } from '../components/FormElements';
 import BordedContainer from '../components/BordedContainer';
+import ProjectsTable from '../components/ProjectsTable';
+import { CBHideDone, CBManagedByMe } from '../components/Checkboxes';
 
 
 export type Project = {
@@ -28,7 +30,13 @@ const ProjectsList = () => {
       <HeadBar />
       <MainWithBox>
         <SideBar />
-        <BordedContainer/>
+        <ContainerBordered>
+        <div style={{display: "flex", flexDirection: "row", justifyContent: "space-around"}}>
+      <CBManagedByMe/>
+      <CBHideDone/>
+    </div> 
+          <ProjectsTable/>
+        </ContainerBordered>
         
           
       </MainWithBox>
@@ -44,6 +52,19 @@ const MainWithBox = styled.main`
     flex-position: row;
     align-item: flex-start;
 
-`; 
+`
+const ContainerBordered = styled.div`
+    margin: 2rem 1rem 3rem 10rem;
+    background-color: #FFF;
+    border-radius: 25px;
+    min-width: 83vw;
+    min-height: 90vh;
+    border: 2px solid black;
+    margin-left: 250px;
+    margin-right: 10px;
+    padding: 30px
+    //flex-direction: row;
+
+`
 
 export default ProjectsList

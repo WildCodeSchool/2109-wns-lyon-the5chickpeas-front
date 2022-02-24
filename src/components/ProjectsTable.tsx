@@ -1,8 +1,10 @@
 import React from 'react';
 //import styled from 'styled-components';
 import { StyledTable } from './TableElements'
+import { CBHideDone, CBManagedByMe } from './Checkboxes';
+import { Container } from '../pages/styles';
 
-type oneProject = {
+type projectType = {
   id: number,
   manager_id: number,
   name: string, 
@@ -13,9 +15,9 @@ type oneProject = {
 
 }
 
-const ListTable = () => {
+const ProjectsTable = () => {
 
-  const projects: oneProject[] = [
+  const projects: projectType[] = [
     {id: 5, manager_id: 1, name: 'React', status_id: 1, due_date: '12/12/22', description: 'créer un projet react qui marche', intitial_time_estimee: 30 }, 
     {id: 4,manager_id: 2, name: 'Youtube Bis', status_id: 0, due_date: '12/01/22', description: 'cloner youtube', intitial_time_estimee: 120 },
     {id: 3,manager_id: 3, name: 'Minus & Cortex', status_id: 1, due_date: '02/01/23', description: 'conquérir le monde', intitial_time_estimee: 90 },
@@ -31,8 +33,9 @@ const ListTable = () => {
     
   
   return (
-    <div >
+    <Container>
     <h1 id='title'>Projects List</h1>
+
     <StyledTable id='projects'>
       <thead >
         <tr>
@@ -44,7 +47,7 @@ const ListTable = () => {
         </tr>
       </thead>
       <tbody>
-      {projects.map((project: oneProject)=> (
+      {projects.map((project: projectType)=> (
         <tr key={project.id}>
           <td>{project.name}</td>
           <td>{project.status_id}</td>
@@ -56,8 +59,8 @@ const ListTable = () => {
       </tbody>
       </StyledTable>
       
-    </div>
+    </Container>
   )
 }
 
-export default ListTable
+export default ProjectsTable

@@ -1,16 +1,15 @@
+import { Button } from '@mui/material';
 import React from 'react'
 import styled from 'styled-components';
-import CheckBox from '../components/Checkbox';
-import ListTable from '../components/ListTable';
+import ProjectsTable from './ProjectsTable';
+import TasksTable from './TasksTable'
 
 function BordedContainer() {
   return (
     <ContainerBordered>
-      <div style={{display: "flex", flexDirection: "row", justifyContent: "space-around"}}>
-        <CheckBox/>
-        <CheckBox/>
-      </div>   
-      <ListTable/>
+  
+      {/* <ProjectsTable/> */}
+      <TasksTable/>
     </ContainerBordered>
   )
 }
@@ -29,4 +28,4 @@ const ContainerBordered = styled.div`
     padding: 30px
     //flex-direction: row;
 
-`;
+`

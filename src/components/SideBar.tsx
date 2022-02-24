@@ -12,7 +12,7 @@ function SideBar() {
     return (
         
         <SideBarStyled>
-            <LinksSideBar href="/dashboard" style={{fontSize: "30px"}}>
+            <LinksSideBar href="/dashboard" style={{fontSize: "25px"}}>
                 <img src={projectManagement} alt={projectManagement}/>
                 <p>Dashboard</p>
             </LinksSideBar>

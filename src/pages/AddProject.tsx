@@ -6,21 +6,11 @@ import { Container } from './styles';
 import HeadBar from '../components/HeadBar';
 import SideBar from '../components/SideBar';
 
-//import BordedContainer from '../components/BordedContainer';
-import TasksTable from '../components/TasksTable'
+//import { Input, Form, ButtonSignUp } from '../components/FormElements';
+import BordedContainer from '../components/BordedContainer';
+import ProjectsTable from '../components/ProjectsTable';
 
-
-export type Project = {
-  manager_id: number,
-  name: string, 
-  status_id: number,
-  due_date: string,
-  description: string, 
-  intitial_time_estimee: number
-
-}
-
-const TasksList = () => {
+const AddProject = () => {
 
 
   return (
@@ -29,7 +19,7 @@ const TasksList = () => {
       <MainWithBox>
         <SideBar />
         <ContainerBordered>
-        <TasksTable/>
+          <ProjectsTable/>
         </ContainerBordered>
         
           
@@ -59,6 +49,6 @@ const ContainerBordered = styled.div`
     padding: 30px
     //flex-direction: row;
 
-`;
+`
 
-export default TasksList
+export default AddProject
