@@ -12,7 +12,7 @@ function SideBar() {
     return (
         
         <SideBarStyled>
-            <LinksSideBar href="#" >
+            <LinksSideBar href="/dashboard" >
                 <img src={projectManagement} alt={projectManagement}/>
                 <p>Dashboard</p>
             </LinksSideBar>

@@ -3,6 +3,7 @@ import React from 'react'
 import Homepage from './pages/Homepage';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
+import Dashboard from './pages/Dashboard';
 // import ValidateAccount from './pages/Homepage';
 // Router
 import {
@@ -21,6 +22,7 @@ export function Router() {
                 <Route path="/signup" element={<SignUp/>} />
                 <Route path="/login" element={<Login/>} />
                 <Route path="/validate-account/:token" element={<ValidateAccount />}></Route>
+                <Route path="/dashboard" element={<Dashboard/>} />
             </Routes>
         </BrowserRouter>
     )
