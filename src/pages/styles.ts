@@ -12,6 +12,17 @@ export const ContainerLogin = styled(Container)`
     
 `;
 
+/* export const BordedContainer = styled.div`
+    margin: 2rem 1rem 3rem 10rem;
+    background-color: #FFF;
+    border-radius: 25px;
+    height: 900px;
+    border: 2px solid black;
+    margin-left: 200px;
+    margin-right: 20px;
+
+`; */
+
 // -------------- Base btn ----------------
 export const Btn = styled.button`
     margin-right: 1rem;
