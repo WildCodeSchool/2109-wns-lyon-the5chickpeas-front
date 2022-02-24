@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+//import styled from 'styled-components';
 import { StyledTable } from './TableElements'
 
 type oneProject = {
@@ -55,11 +55,6 @@ const ListTable = () => {
       ))}
       </tbody>
       </StyledTable>
-{/*       <div>
-        {projects.map((project: oneProject)=> (
-          <div key={project.id}>{project.name}</div>
-        ))}
-      </div> */}
       
     </div>
   )

@@ -35,6 +35,11 @@ const GlobalStyle = createGlobalStyle`
         font-size: 1rem;
     }
 
+    .flex-custom{
+        display: flex;
+        justify-content: space-between;
+    }
+
     .flex {
         display: flex;
         &-column {
@@ -46,6 +51,21 @@ const GlobalStyle = createGlobalStyle`
             align-items: center;
         }
     }
+
+    .centered{
+        text-align: center;
+    }
+
+    .bordered{
+        border-radius: 15px;
+        border: 2px solid black;
+        padding: 2rem;
+        width: 75%;
+        right: 2%;
+        position: absolute;
+        margin-top: 100px;
+    }
+    
 `;
 
 export default GlobalStyle;

@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React from 'react'
 // styles
 import styled from 'styled-components';
 import { Container } from './styles';
@@ -6,7 +6,7 @@ import { Container } from './styles';
 import HeadBar from '../components/HeadBar';
 import SideBar from '../components/SideBar';
 
-import { Input, Form, ButtonSignUp } from '../components/FormElements';
+//import { Input, Form, ButtonSignUp } from '../components/FormElements';
 import BordedContainer from '../components/BordedContainer';
 
 

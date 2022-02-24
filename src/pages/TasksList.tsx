@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React from 'react'
 // styles
 import styled from 'styled-components';
 import { Container } from './styles';

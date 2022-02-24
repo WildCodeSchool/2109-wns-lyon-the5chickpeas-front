@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-import styled from 'styled-components'
-import {Input, Case} from '../components/FormElements'
+//import styled from 'styled-components'
+import {Case} from '../components/FormElements'
 
 const CheckBox = () => {
 
