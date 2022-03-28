@@ -17,7 +17,9 @@ import Profile from './pages/Profile';
 import AddProject from './pages/AddProject';
 import AddTask from './pages/AddTask';
 
+
 export function Router() {
+    
     return (
         <BrowserRouter>
             <Routes>
