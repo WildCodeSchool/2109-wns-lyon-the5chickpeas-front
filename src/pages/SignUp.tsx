@@ -13,10 +13,10 @@ import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
 
-    const [ pseudo, setPseudo] = useState('')
-    const [ email, setEmail ] = useState('')
-    const [ password, setPassword ] = useState('')
-    const [ confPassword, setConfPassword ] = useState('')
+    const [ pseudo, setPseudo] = useState('John')
+    const [ email, setEmail ] = useState('john@gmail.com')
+    const [ password, setPassword ] = useState('password')
+    const [ confPassword, setConfPassword ] = useState('password')
     const [ isSaved, setIsSaved ] = useState(false)
     const [ validAccountToken, setValidAccountToken] = useState('')
     //const [ error, setError ] = useState('')
@@ -27,7 +27,6 @@ const SignUp = () => {
     mutation Signup($pseudo: String!, $password: String!, $email: String!, $validAccountToken: String!) {
     signup(pseudo: $pseudo, password: $password, email: $email, validAccountToken: $validAccountToken) {
         pseudo
-        password
         email
         validAccountToken
         }
@@ -54,7 +53,8 @@ const SignUp = () => {
                     if (result.data.success) {
                         setError('');
                     } */
-                    console.log('info from form', pseudo, email);
+                    console.log('Hey ', pseudo, email);
+                    console.log('You can check your email to validate your account...')
                     signup({variables:{email: email, pseudo: pseudo, password:password, validAccountToken:validAccountToken},
                     });
                     setEmail('');
@@ -62,7 +62,7 @@ const SignUp = () => {
                     setPassword('');
                     setValidAccountToken('');
                     setIsSaved(true);
-                    navigate('/profile');
+                    navigate('/login');
                     console.log('data:', data, isSaved)
 
                 

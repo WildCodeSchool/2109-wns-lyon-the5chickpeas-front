@@ -42,3 +42,17 @@ export const ButtonSignUp = styled.button`
         color: #FABB18;
     }
 `
+
+export const Case = styled.input`
+    position: relative;
+    width: 20px;
+    height: 20px;
+    margin: 10px;
+    padding: 0 10px;
+    font-size: 30px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 30px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    
+
+`;
