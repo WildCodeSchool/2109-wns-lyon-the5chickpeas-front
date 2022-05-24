@@ -24,15 +24,15 @@ const SignUp = () => {
     const navigate = useNavigate();
 
     const [signup, { data, loading, error }] = useMutation(gql`
-    mutation Signup($pseudo: String!, $password: String!, $email: String!, $validAccountToken: String!) {
-    signup(pseudo: $pseudo, password: $password, email: $email, validAccountToken: $validAccountToken) {
-        pseudo
-        email
-        validAccountToken
-        }
-    }   
+        mutation Signup($pseudo: String!, $password: String!, $email: String!, $validAccountToken: String!) {
+        signup(pseudo: $pseudo, password: $password, email: $email, validAccountToken: $validAccountToken) {
+            pseudo
+            email
+            validAccountToken
+            }
+        }   
     ` 
-);
+    );
 
     return (
         <>

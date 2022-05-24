@@ -6,6 +6,7 @@ import SignUp from './pages/SignUp';
 import TasksList from './pages/TasksList';
 import ProjectsList from './pages/ProjectsList';
 import Dashboard from './pages/Dashboard';
+import TaskDetail from './pages/TaskDetail';
 // import ValidateAccount from './pages/Homepage';
 // Router
 import {
@@ -33,6 +34,7 @@ export function Router() {
                 <Route path="/dashboard" element={<Dashboard/>} />
                 <Route path="/addProject" element={<AddProject/>} />
                 <Route path="/addTask" element={<AddTask/>} />
+                <Route path="/project/:projectSlug/task/:taskId" element={<TaskDetail/>} />
             </Routes>
         </BrowserRouter>
     )
