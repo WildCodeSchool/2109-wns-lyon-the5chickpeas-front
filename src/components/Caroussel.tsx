@@ -1,38 +1,84 @@
-import React, { useState } from 'react';
-import PropTypes from "prop-types";
-import styled, {css} from 'styled-components';
-import { ButtonCustom } from './Button';
-import { CarrouselTask } from '../components/CarousselTask';
-import Carousel from 'react-elastic-carousel';
-import ReactElasticCarousel from 'react-elastic-carousel';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { CarrouselTask } from './CarousselTask';
+import gql from "graphql-tag";
+import { useQuery } from "@apollo/client";
+import { Chip } from './Chip';
 
-const StyledCaroussel=styled.div`
+const StyledCaroussel = styled.div`
     min-width: 75%;
-    display: flex;
-    justify-content: space-between;
     margin: 3rem auto 5em auto;
+    background-color: gray;
 `;
 
-const breakPoints = [
-    { width: 1, itemsToShow: 1 },
-    { width: 550, itemsToShow: 2 },
-    { width: 768, itemsToShow: 3 },
-    { width: 1200, itemsToShow: 4 },
-  ];
+const FlexSpaceBetween = styled.div`
+    display: flex;
+    justify-content: space-between;
+    p:first-child {
+        font-weight: bold;
+    }
+`;
 
-export function Caroussel({children, priorTasks}:{children?: any, priorTasks?: any}){
+export const GET_TASKS = gql`
+    query GetTasks {
+        getTasks {
+        subject
+        description
+        }
+    }
+`;
 
-    return(     
-        
-         <ReactElasticCarousel isRTL breakPoints={breakPoints}>
-            {priorTasks.length > 0 ? 
-            
-                priorTasks.map((task: any) => (
-                    <CarrouselTask title={task.title} date={task.date} taskMessage={task.text} label1={task.label1} label2={task.label2}>
-                    </CarrouselTask>
-                ))
-            : <CarrouselTask taskMessage={'No urgent taks.'} padding={'0px'}></CarrouselTask>
-            } 
-       </ReactElasticCarousel>
+export function Caroussel() {
+    const { loading, error, data } = useQuery(GET_TASKS);
+
+    // if (loading) return 'Loading...';
+    // if (error) return `Error! ${error.message}`;
+
+    const [tasks, setTasks] = useState([]);
+
+    useEffect(() => {
+        ;(async() => {
+            try{
+                const tasksData = await data.getTasks;
+                if (tasksData) {
+                    setTasks(tasksData)
+                }
+                console.log(tasksData);
+                
+            } catch(e) {
+                console.log(e);
+            }
+        })
+    ()},[data])
+
+    return (
+        <StyledCaroussel>
+            {loading ? <p>loading</p> : tasks && tasks.length > 0 ? (
+                <Carousel>
+                    {tasks?.map((task: any) => (
+                        <FlexSpaceBetween>
+                            <Chip background={'blue'}>
+                                {task.subject}
+                            </Chip>
+                        </FlexSpaceBetween>
+                    ))}
+                </Carousel>
+
+            ) : <CarrouselTask taskMessage={'No urgent taks.'} padding={'0px'}></CarrouselTask>
+                // (
+                // <Carousel>
+                //     { tasks && tasks?.length > 0 ?  
+                //         tasks?.map((task: any) => (
+                //             <CarrouselTask title={task.title} date={task.date} taskMessage={task.text} label1={task.label1} label2={task.label2}>
+                //             </CarrouselTask>
+                //         ))
+                //     : <CarrouselTask taskMessage={'No urgent taks.'} padding={'0px'}></CarrouselTask>
+                //     } 
+                // </Carousel>
+                // )
+            }
+        </StyledCaroussel>
     )
 }

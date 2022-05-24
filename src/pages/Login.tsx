@@ -10,10 +10,10 @@ import { useAuth } from '../hooks/auth';
 
 const Login = () => {
 
-    const [ email, setEmail ] = useState('');
+    const [ email, setEmail ] = useState('test@test.com');
     const [ failed, setFailed ] = useState(false);
     const [ loading, setLoading ] = useState(false);
-    const [ password, setPassword ] = useState('');
+    const [ password, setPassword ] = useState('test');
     const [ error, setError ] = useState('');
     const [ validAccountToken, setValidAccountToken] = useState('');
 

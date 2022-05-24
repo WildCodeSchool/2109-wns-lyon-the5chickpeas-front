@@ -62,7 +62,8 @@ export function AuthProvider({
                     validAccountToken: validAccountToken
                 }
             });
-
+            console.log(result);
+            
             if (result.data.signin) {
                 // success
                 localStorage.setItem('token', result.data.signin);

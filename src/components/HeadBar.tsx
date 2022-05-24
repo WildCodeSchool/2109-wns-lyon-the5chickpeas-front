@@ -42,6 +42,7 @@ const HeadBarStyled = styled.nav`
     background-color: #FABB18;
     width: 100%;
     height: 80px;
+    z-index: 1000;
     img{
         max-height: calc(80px - 2rem);
         margin-right: 1rem;
