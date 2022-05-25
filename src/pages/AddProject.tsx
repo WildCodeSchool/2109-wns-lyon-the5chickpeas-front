@@ -21,17 +21,14 @@ const AddProject = () => {
         <ContainerBordered>
           <ProjectsTable/>
         </ContainerBordered>
-        
-          
       </MainWithBox>
-            
     </Container>
   )
 }
 
 const MainWithBox = styled.main`
     margin-top: 80px;
-    width: 100%
+    width: 100%;
     display: flex;
     flex-position: row;
     align-item: flex-start;

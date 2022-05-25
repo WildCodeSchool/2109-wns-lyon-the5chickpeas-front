@@ -1,8 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 //import styled from 'styled-components';
 import { StyledTable } from './TableElements'
 import { CBHideDone, CBManagedByMe } from './Checkboxes';
 import { Container } from '../pages/styles';
+import { ButtonCustom } from './Button';
+import { useNavigate } from "react-router-dom";
+import BasicModal from './Modal';
+
 
 type projectType = {
   id: number,
@@ -25,16 +29,25 @@ const ProjectsTable = () => {
     {id: 1,manager_id: 5, name: 'Jeff Bezouz', status_id: 1, due_date: '04/07/25', description: 'devenir riche sans rien faire', intitial_time_estimee: 23 } 
 
   ]
-  console.log('====================================');
-  console.log(projects);
-  console.log('====================================');
 
+  const navigation = useNavigate();
 
-    
-  
+  const [isModal, setIsModal] = useState(false);
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setIsModal(true)
+    setOpen(true)
+  };
+  const handleClose = () => setOpen(false);
+
   return (
     <Container>
-    <h1 id='title'>Projects List</h1>
+    <div className='flex-custom flex row'>
+      <h1 id='title'>Projects List</h1>    
+      <ButtonCustom onClick={handleOpen}>Ajouter un projet</ButtonCustom>
+      {isModal && <BasicModal open={open} handleClose={handleClose}><p>coucou</p></BasicModal> } 
+    </div>
 
     <StyledTable id='projects'>
       <thead >
