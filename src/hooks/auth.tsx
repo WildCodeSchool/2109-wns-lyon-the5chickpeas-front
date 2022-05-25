@@ -89,10 +89,11 @@ export function AuthProvider({
             return false;
         }
     };
+
     const signout = async (): Promise<void> => {
         localStorage.removeItem('token');
-        refetch();
     };
+
     return (
         <AuthContext.Provider value={{
             isConnected,

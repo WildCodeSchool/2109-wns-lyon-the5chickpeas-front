@@ -4,8 +4,11 @@ import styled from 'styled-components';
 import logo from '../images/Logo.svg';
 import profile from '../images/profile.png';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../hooks/auth';
+import { BtnWhite } from '../pages/styles';
 
 function HeadBar() {
+    const {isConnected, signout} = useAuth()
     return (
         <HeadBarStyled>
             <div>
@@ -14,16 +17,18 @@ function HeadBar() {
                 </Link>
                 <span>WildMine</span>
             </div>
-            <div>
+            <RightElement>
                 {/* ? if user is log in show profile */}
                 {/* get user's photo */}
                 {/* get user's name */}
                 {/* ? get user's notification */}
-                {/* ? log out link */}
                 <ProfileStyled src={profile} alt="profile" />
-                {/* LINK LOG OUT ? */}
                 <h3>Welcome </h3>
-            </div>
+                {isConnected && 
+                <Link to="/">
+                    <BtnWhite style={{marginLeft: "10px"}} onClick={signout}>Logout</BtnWhite>
+                </Link>}
+            </RightElement>
         </HeadBarStyled>
     )
 };
@@ -59,5 +64,14 @@ const ProfileStyled = styled.img`
     border-radius: 50%;
     max-width: 50px;
 `;
+
+const RightElement = styled.head`
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+margin : 0 1rem
+`;
+
 
 export default HeadBar;
