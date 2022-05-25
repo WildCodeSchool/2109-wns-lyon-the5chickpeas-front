@@ -44,8 +44,8 @@ export function AuthProvider({
     const [doCreateUser] = useMutation(CREATE_USER);
     const { data: getMeData, refetch } = useQuery(GET_ME);
     useEffect(() => {
-        console.log('Connection status changed: ', !!getMeData);
-        console.log('User data is: ', getMeData?.getMe);
+        //console.log('Connection status changed: ', !!getMeData);
+        //console.log('User data is: ', getMeData?.getMe);
         if (getMeData) {
             setIsConnected(true);
         } else {
@@ -62,7 +62,7 @@ export function AuthProvider({
                     validAccountToken: validAccountToken
                 }
             });
-            console.log(result);
+            //console.log(result);
             
             if (result.data.signin) {
                 // success

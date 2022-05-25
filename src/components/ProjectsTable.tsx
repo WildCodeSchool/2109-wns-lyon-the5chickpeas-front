@@ -6,6 +6,8 @@ import { Container } from '../pages/styles';
 import { ButtonCustom } from './Button';
 import { useNavigate } from "react-router-dom";
 import BasicModal from './Modal';
+import ProjectForm from './forms/ProjectForm';
+import { gql, useQuery } from '@apollo/client';
 
 
 type projectType = {
@@ -30,6 +32,16 @@ const ProjectsTable = () => {
 
   ]
 
+  // Preparation de la requete GraphQL
+  const {data, loading} = useQuery(gql`
+    query GetProjects {
+      getProjects {
+        name,
+        description
+      }
+    }` 
+  );
+
   const navigation = useNavigate();
 
   const [isModal, setIsModal] = useState(false);
@@ -42,37 +54,43 @@ const ProjectsTable = () => {
   const handleClose = () => setOpen(false);
 
   return (
-    <Container>
-    <div className='flex-custom flex row'>
-      <h1 id='title'>Projects List</h1>    
-      <ButtonCustom onClick={handleOpen}>Ajouter un projet</ButtonCustom>
-      {isModal && <BasicModal open={open} handleClose={handleClose}><p>coucou</p></BasicModal> } 
-    </div>
+      !loading ?
+        <Container>
+        <div className='flex-custom flex row'>
+          <h1 id='title'>Projects List</h1>    
+          <ButtonCustom onClick={handleOpen}>Ajouter un projet</ButtonCustom>
+          {isModal && 
+          
+          <BasicModal open={open} handleClose={handleClose}>
+            <ProjectForm />
+          </BasicModal> } 
+        </div>
 
-    <StyledTable id='projects'>
-      <thead >
-        <tr>
-          <th>Name</th>
-          <th>Status</th>
-          <th>Due Date</th>
-          <th>Description</th>
-          <th>Initial Time Estimee</th>
-        </tr>
-      </thead>
-      <tbody>
-      {projects.map((project: projectType)=> (
-        <tr key={project.id}>
-          <td>{project.name}</td>
-          <td>{project.status_id}</td>
-          <td>{project.due_date}</td>
-          <td>{project.description}</td>
-          <td>{project.intitial_time_estimee} heures</td>
-        </tr>
-      ))}
-      </tbody>
-      </StyledTable>
+        <StyledTable id='projects'>
+          <thead >
+            <tr>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Due Date</th>
+              <th>Description</th>
+              <th>Initial Time Estimee</th>
+            </tr>
+          </thead>
+          <tbody>
+          {data.getProjects.map((project: projectType)=> (
+            <tr key={project.id}>
+              <td>{project.name}</td>
+              <td>{project.status_id}</td>
+              <td>{project.due_date}</td>
+              <td>{project.description}</td>
+              <td>{project.intitial_time_estimee} heures</td>
+            </tr>
+          ))}
+          </tbody>
+          </StyledTable>
+          
+        </Container> : null
       
-    </Container>
   )
 }
 
