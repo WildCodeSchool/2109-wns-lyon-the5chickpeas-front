@@ -19,10 +19,10 @@
           required={true}
           multiline
           className="comment"
-          id="comment"
+          id="description-input"
           label="Comment"
-          rows={2}
-          defaultValue=""
+          rows={3}
+          defaultValue="Une description du projet..."
           variant="outlined"
           {...register('comment')}
         />

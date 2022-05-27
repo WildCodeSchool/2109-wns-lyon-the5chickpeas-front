@@ -52,7 +52,7 @@ const ProjectForm = () => {
 
                         const result = await AddProject({variables : {data : data}});
 
-                        console.log(result);
+                        //console.log(result);
                     
                         }
                     }
