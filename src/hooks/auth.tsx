@@ -16,11 +16,13 @@ const SIGNIN = gql`
     }   
 `;
 
-const CREATE_USER = gql`
-    mutation createUser($email: String!, $password: String!) {
-        createUser(email: $email, password: $password) {
+const SIGNUP = gql`
+    mutation Signup($email: String!, $password: String!, $pseudo: String!, $validAccountToken: String!) {
+        signup(email: $email, password: $password, pseudo: $pseudo, validAccountToken:$validAccountToken) {
             id
             email
+            pseudo
+            validAccountToken
         }
     }
 `;
@@ -29,7 +31,7 @@ export const AuthContext = createContext<{
     isConnected: boolean,
     user: { id: number, email: string } | null,
     signin: (email: string, password: string, validAccountToken: string) => Promise<boolean>,
-    signup: (email: string, password: string) => Promise<boolean>,
+    signup: (email: string, password: string, pseudo: string, validAccountToken: string) => Promise<boolean>,
     signout: () => Promise<void>
 } | null>(null);
 
@@ -41,7 +43,7 @@ export function AuthProvider({
 }): JSX.Element {
     const [isConnected, setIsConnected] = useState(false);
     const [doSignin] = useMutation(SIGNIN);
-    const [doCreateUser] = useMutation(CREATE_USER);
+    const [doSignUp] = useMutation(SIGNUP);
     const { data: getMeData, refetch } = useQuery(GET_ME);
     useEffect(() => {
         //console.log('Connection status changed: ', !!getMeData);
@@ -76,12 +78,14 @@ export function AuthProvider({
             return false;
         }
     }
-    const signup = async (email: string, password: string): Promise<boolean> => {
+    const signup = async (email: string, password: string, pseudo: string, validAccountToken: string): Promise<boolean> => {
         try {
-            await doCreateUser({
+            await doSignUp({
                 variables: {
                     email: email,
-                    password: password
+                    password: password,
+                    pseudo: pseudo,
+                    validAccountToken: validAccountToken
                 }
             });
             return true;

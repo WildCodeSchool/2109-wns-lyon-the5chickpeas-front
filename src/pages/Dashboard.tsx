@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useQuery } from "@apollo/client";
+import { useLocation } from 'react-router-dom';
+
 import gql from "graphql-tag";
 // styles
 import styled from 'styled-components';
@@ -36,7 +38,11 @@ function Dashboard() {
         margin: 5rem 0 0 40rem;
     `;
     const notifications: any[] = [];
-
+const location= useLocation()
+    useEffect(()=> {
+        console.log("location DHB", location)
+    },
+    [location])
     const datas = [
         {
             dataDescription: 'Initial time spent',
