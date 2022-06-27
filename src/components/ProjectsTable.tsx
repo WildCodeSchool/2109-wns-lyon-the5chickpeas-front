@@ -1,8 +1,17 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 //import styled from 'styled-components';
 import { StyledTable } from './TableElements'
 import { CBHideDone, CBManagedByMe } from './Checkboxes';
 import { Container } from '../pages/styles';
+import { ButtonCustom } from './Button';
+import { useNavigate } from "react-router-dom";
+import BasicModal from './Modal';
+import ProjectForm from './forms/ProjectForm';
+import { gql, useMutation, useQuery } from '@apollo/client';
+import { Alert, CircularProgress, Snackbar } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
+import EditIcon from '@mui/icons-material/Edit';
+
 
 type projectType = {
   id: number,
@@ -17,49 +26,119 @@ type projectType = {
 
 const ProjectsTable = () => {
 
-  const projects: projectType[] = [
-    {id: 5, manager_id: 1, name: 'React', status_id: 1, due_date: '12/12/22', description: 'créer un projet react qui marche', intitial_time_estimee: 30 }, 
-    {id: 4,manager_id: 2, name: 'Youtube Bis', status_id: 0, due_date: '12/01/22', description: 'cloner youtube', intitial_time_estimee: 120 },
-    {id: 3,manager_id: 3, name: 'Minus & Cortex', status_id: 1, due_date: '02/01/23', description: 'conquérir le monde', intitial_time_estimee: 90 },
-    {id: 2,manager_id: 4, name: 'Marie Carie', status_id: 1, due_date: '16/09/22', description: 'trouver un vaccin contre le cancer', intitial_time_estimee: 55 }, 
-    {id: 1,manager_id: 5, name: 'Jeff Bezouz', status_id: 1, due_date: '04/07/25', description: 'devenir riche sans rien faire', intitial_time_estimee: 23 } 
+  const navigation = useNavigate();
 
-  ]
-  console.log('====================================');
-  console.log(projects);
-  console.log('====================================');
+  const [isModal, setIsModal] = useState(false);
+  const [message, setMessage] = useState('');
+  const [open, setOpen] = React.useState(false);
+  const [openAlert, setOpenAlert] = React.useState(false);
+  const [projectList, setProjectList] = useState([]);
 
 
-    
-  
+  // Preparation de la requete GraphQL
+  const {data, loading, error, refetch} = useQuery(gql`
+    query GetProjects {
+      getProjects {
+        id,
+        name,
+        description
+      }
+    }` 
+  );
+
+   // Rechargement de la page
+   useEffect(() => {
+     if(data?.getProjects){ // <=> data?.getProjects
+      setProjectList(data?.getProjects);
+     }
+   },[data]);
+
+   // Delete a project query
+   const [deleteProject] = useMutation(gql`
+      mutation DeleteProject($deleteProjectId: ID!) {
+        deleteProject(id: $deleteProjectId)
+      }` 
+   );
+
+   const deletePro = async (projectId: number) =>{
+
+      const result = await deleteProject({variables:{deleteProjectId: projectId}, refetchQueries: ['GetProjects']});
+
+      if(result.data.deleteProject){
+          // Flash message 
+          setOpenAlert(true); 
+          //refetch();
+      }
+   }
+
+
+  const handleOpen = () => {
+    setIsModal(true)
+    setOpen(true)
+  };
+  const handleClose = () => setOpen(false);
+  const handleCloseAlert = () => setOpenAlert(false);
+
+
+  // Gestion des erreurs de l'appel 
+  if(error){
+    setMessage('Une erreur est survenue, pensez à vous identifier !');
+  }
+
   return (
-    <Container>
-    <h1 id='title'>Projects List</h1>
+      !loading || !error ?
+        <Container>
+          <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleCloseAlert}>
+            <Alert onClose={handleCloseAlert} severity="success" sx={{ width: '100%' }}>
+              Le project a été supprimé avec succès !
+            </Alert>
+          </Snackbar>
+        <div className='flex-custom flex row'>
+          <h1 id='title'>Projects List</h1>    
+          <ButtonCustom onClick={handleOpen}>Ajouter un projet</ButtonCustom>
+          {isModal && 
+          
+          <BasicModal open={open} handleClose={handleClose}>
+            <ProjectForm />
+          </BasicModal> } 
+        </div>
 
-    <StyledTable id='projects'>
-      <thead >
-        <tr>
-          <th>Name</th>
-          <th>Status</th>
-          <th>Due Date</th>
-          <th>Description</th>
-          <th>Initial Time Estimee</th>
-        </tr>
-      </thead>
-      <tbody>
-      {projects.map((project: projectType)=> (
-        <tr key={project.id}>
-          <td>{project.name}</td>
-          <td>{project.status_id}</td>
-          <td>{project.due_date}</td>
-          <td>{project.description}</td>
-          <td>{project.intitial_time_estimee} heures</td>
-        </tr>
-      ))}
-      </tbody>
-      </StyledTable>
+        {loading ?  <CircularProgress /> :
+        <StyledTable id='projects'>
+            <><thead>
+              <tr>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Due Date</th>
+                <th>Description</th>
+                <th>Initial Time Estimee</th>
+                <th>Action(s)</th>
+              </tr>
+            </thead>
+            
+            <tbody>
+
+                {projectList && projectList.map((project: projectType) => (
+                  <tr key={project.id}>
+                    <td>{project.name}</td>
+                    <td>{project.status_id}</td>
+                    <td>{project.due_date}</td>
+                    <td>{project.description}</td>
+                    <td>{project.intitial_time_estimee} heures</td>
+                    <td>
+                      <ClearIcon onClick={() => deletePro(project.id)}></ClearIcon>
+                      <EditIcon></EditIcon>
+                    </td>
+                  </tr>
+                ))}
+
+            </tbody>
+            </>
+          </StyledTable>
+           }
+        </Container> : <Container>{message ? <p className='alert warning'>{message}</p> : ''}</Container>
+
       
-    </Container>
   )
 }
 

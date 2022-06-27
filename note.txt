@@ -1,0 +1,37 @@
+- Formulaire (task + project)
+- Jeu de tests pour tout le monde (fichier feed.tsx)
+
+<form
+        noValidate
+        autoComplete="off"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <TextField
+          required={true}
+          className="name"
+          label="Name"
+          id="name-input"
+          defaultValue="Le nom de votre projet..."
+          variant="outlined"
+          {...register('user_name')}
+        />
+        <TextField
+          required={true}
+          multiline
+          className="comment"
+          id="description-input"
+          label="Comment"
+          rows={3}
+          defaultValue="Une description du projet..."
+          variant="outlined"
+          {...register('comment')}
+        />
+        <Button
+          className={classes.Button}
+          variant="outlined"
+          type="submit"
+          endIcon={<Icon>send</Icon>}
+        >
+          Send
+        </Button>
+      </form>
