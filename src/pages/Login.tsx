@@ -1,16 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container, ContainerLogin } from './styles'
 import { Input, Form, ButtonSignUp } from '../components/FormElements';
 import logo from '../images/Logo.svg';
 import '../App.css'
 import SideBar from '../components/SideBar'
-
+import { gql, useMutation } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/auth';
 
 const Login = () => {
 
-    const [ email, setEmail ] = useState('')
-    const [ password, setPassword ] = useState('')
-    const [ error, setError ] = useState('')
+    const [ email, setEmail ] = useState('test@test.com');
+    const [ failed, setFailed ] = useState(false);
+    const [ loading, setLoading ] = useState(false);
+    const [ password, setPassword ] = useState('test');
+    const [ error, setError ] = useState('');
+    const [ validAccountToken, setValidAccountToken] = useState('');
+
+    const {signin} = useAuth();
+
+    const navigate = useNavigate();
 
     return (
         <>
@@ -21,17 +30,39 @@ const Login = () => {
                 
                 <Form
                     onSubmit={async (e: React.SyntheticEvent) => {
-                    e.preventDefault();
-                    /* const result = await post('http://localhost:3000', {
-                        email,
-                        password,
-                        confPassword
-                    });
-                    console.log(result); // eslint-disable-line no-console
-                    if (result.data.success) {
-                        setError('');
-                    } */
-                    }}
+                        setFailed(false);
+                        setLoading(true);
+                        e.preventDefault();
+                        
+                        // Traitement 
+                        const result = await signin(email, password, validAccountToken);
+                        //const result = null;
+                        console.log(result);
+                        
+                        if(result){
+
+                            // Ré-initialisation des valeurs 
+                            setEmail('');
+                            setPassword('');
+                            setValidAccountToken('');
+
+                            // Garder en session le token 
+                            //const token = result.data.signin;
+                            //localStorage.setItem('token', token);
+
+                            // Redirection dashboard
+                            navigate('/dashboard');
+
+                            return;
+                        }else{
+                            // traitement des messages d'erreurs => Affichage des msg retournés par le back
+                            setFailed(true);
+                        }
+
+                        setLoading(false);
+                    
+                        }
+                    }
                 >
                     <Input
                         id="email-input"

@@ -59,11 +59,11 @@ const GlobalStyle = createGlobalStyle`
     .bordered{
         border-radius: 15px;
         border: 2px solid black;
-        padding: 2rem;
+        padding: 0 2rem 0 2rem;
         width: 75%;
         right: 2%;
         position: absolute;
-        margin-top: 100px;
+        margin-top: 50px;
     }
     
 `;

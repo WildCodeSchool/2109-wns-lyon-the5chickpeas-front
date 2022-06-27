@@ -15,55 +15,18 @@ import { Caroussel } from '../components/Caroussel';
 import { Title } from '../components/Title';
 
 
-export const GET_PROFILE = gql`
-    query getProfile {
-        getProfile {
-            id
-            email
-        }
-    }
-`;
+// export const GET_PROFILE = gql`
+//     query getProfile {
+//         getProfile {
+//             id
+//             email
+//         }
+//     }
+// `;
 
 
 function Dashboard() {
-    const { data, error } = useQuery(GET_PROFILE);
-    //Fake datas
-    const priorTasks: any[] = [];
-    const priorTaskss = [
-        {
-            title: 'Wireframe',
-            date: '24/10/21',
-            text: 'make the wireframe of the project fil rouge',
-            label1: 'Loading...15%',
-            label2: 'Projet fil rouge'
-        },
-        {
-            title: 'graphQL',
-            date: '15/10/21',
-            text: 'make the wireframe of the project fil rouge'
-        },
-        {
-            title: 'TypeORM',
-            date: '04/12/21',
-            text: 'make the wireframe of the project fil rouge',
-            label1: 'Loading...58%',
-            label2: 'Projet WCS'
-        },
-        {
-            title: 'Javascript',
-            date: '04/12/21',
-            text: 'make the wireframe of the project fil rouge',
-            label1: 'Loading...99%',
-            label2: 'Projet Personnel'
-        },
-        {
-            title: 'PHP',
-            date: '04/12/21',
-            text: 'make the wireframe of the project fil rouge',
-            label1: 'Loading...99%',
-            label2: 'Projet Personnel'
-        }
-    ];
+    // const { data, error } = useQuery(GET_PROFILE);
     
     const StyledCaroussel=styled.div`
         width: 70rem;
@@ -108,8 +71,8 @@ function Dashboard() {
                     <div className='centered'>
                         <Title titletext='High priority'>
                         </Title>
-                        <Caroussel priorTasks={priorTasks}>    
-                        </Caroussel>
+                        {/* <Caroussel priorTasks={priorTasks} /> */}
+                        <Caroussel />
                     </div>
 
                     <div className='flex-custom'>

@@ -62,6 +62,7 @@ const NavBarStyled = styled.nav`
     background-color: #FABB18;
     width: 100%;
     height: 80px;
+    z-index: 9999;
     img{
         max-height: calc(80px - 2rem);
         margin: 1rem;

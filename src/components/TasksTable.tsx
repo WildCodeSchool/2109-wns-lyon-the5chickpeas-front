@@ -2,8 +2,11 @@ import React from 'react'
 import { Container } from '../pages/styles'
 import { StyledTable } from './TableElements'
 import { CBAssignedToMe, CBHideDone, CBHighPriority } from './Checkboxes'
+import { useNavigate } from "react-router-dom";
 
 const TasksTable = () => {
+
+  const navigation = useNavigate();
 
   interface tasksType {
     id: number,
@@ -75,13 +78,17 @@ const TasksTable = () => {
       </thead>
       <tbody>
       {tasks.map((task: tasksType)=> (
-        <tr key={task.id}>
-          <td>{task.subject}</td>
-          <td>{task.project}</td>
-          <td>{task.status_id}</td>
-          <td>{task.assignee}</td>
-          <td>{task.due_date}</td>
-        </tr>
+
+        
+          <tr onClick={() =>  navigation(`/project/${task.project}/task/${task.id}`, { replace: true })} key={task.id}>
+            <td>{task.subject}</td>
+            <td>{task.project}</td>
+            <td>{task.status_id}</td>
+            <td>{task.assignee}</td>
+            <td>{task.due_date}</td>
+          </tr>
+
+
       ))}
       </tbody>
       </StyledTable>
