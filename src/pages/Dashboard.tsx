@@ -1,16 +1,11 @@
 import React, { useEffect } from 'react';
-import { useQuery } from "@apollo/client";
 import { useLocation } from 'react-router-dom';
-
-import gql from "graphql-tag";
 // styles
 import styled from 'styled-components';
 import { Container } from './styles';
 // components
 import HeadBar from '../components/HeadBar';
 import SideBar from '../components/SideBar';
-import { Input, Form, ButtonSignUp } from '../components/FormElements';
-import { ButtonCustom } from '../components/Button';
 import { TOTW } from '../components/TOTW';
 import { BoxNotification } from '../components/BoxNotification';
 import { Caroussel } from '../components/Caroussel';
@@ -100,12 +95,10 @@ const location= useLocation()
                             <Title titletext='Last notifications'>
                             </Title>
                             {notifications.length > 0  ?
-                           
                                 notifications.map((notification) => (
                                     <BoxNotification date={notification.date} time={notification.time} notification={notification.notification} notificatedBy={notification.notificatedBy}>
                                     </BoxNotification>
                                 ))
-
                             : <BoxNotification notification={'No notifications.'}></BoxNotification>}
                         </div>
                     </div>

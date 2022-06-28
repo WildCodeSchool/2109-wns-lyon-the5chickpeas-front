@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Container } from './styles'
 import { Input, Form, ButtonSignUp } from '../components/FormElements';
 import logo from '../images/Logo.svg';
-import { gql, useMutation } from "@apollo/client";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/auth';
 
@@ -11,7 +10,7 @@ const SignUp = () => {
     const [ pseudo, setPseudo] = useState('John')
     const [ email, setEmail ] = useState('john@gmail.com')
     const [ password, setPassword ] = useState('supersecret')
-    const [ validAccountToken, setValidAccountToken] = useState('')
+    const [ validAccountToken, ] = useState('')
     const [ failed, setFailed ] = useState(false);
     const [ loading, setLoading ] = useState(false);const { signup } = useAuth();
     const navigate = useNavigate();
@@ -30,7 +29,6 @@ const SignUp = () => {
                     const result = await signup(email, password, pseudo, validAccountToken);
                     if (result) {
                         setPseudo('');
-                        //setIsSaved(true);
                         setPassword('');
                         setEmail('');
                         navigate('/dashboard', {replace:true});
