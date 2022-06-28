@@ -28,19 +28,6 @@ const Login = () => {
         <div className='div-logo'>
           <img src={logo} alt='5 chickpeas' />
         </div>
-        <Snackbar
-          open={openAlert}
-          autoHideDuration={6000}
-          onClose={handleCloseAlert}
-        >
-          <Alert
-            onClose={handleCloseAlert}
-            severity='error'
-            sx={{ width: "100%" }}
-          >
-            Go check your email to validate your validAccountToken
-          </Alert>
-        </Snackbar>
         <Form
           onSubmit={async (e: React.SyntheticEvent) => {
             setFailed(false);

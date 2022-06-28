@@ -21,7 +21,7 @@ const SIGNIN = gql`
       password: $password
       email: $email
     ) {
-      token
+      authorizationToken
       errorMessage
     }
   }
@@ -100,11 +100,13 @@ export function AuthProvider({
           validAccountToken: validAccountToken,
         },
       });
-      if (result.data.signin.token !== null) {
+      if (result.data.signin.authorizationToken !== null) {
         // success
-        localStorage.setItem("token", result.data.signin.token);
+        localStorage.setItem(
+          "authorizationToken",
+          result.data.signin.authorizationToken
+        );
         await refetch();
-
         return true;
       } else {
         if (result.data.signin.errorMessage === "validation_to_be_done") {
@@ -146,7 +148,7 @@ export function AuthProvider({
   };
 
   const signout = async (): Promise<void> => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("authorizationToken");
   };
 
   return (
