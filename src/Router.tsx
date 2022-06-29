@@ -17,6 +17,7 @@ import ValidateAccount from './pages/ValidateAccount';
 import Profile from './pages/Profile';
 import AddProject from './pages/AddProject';
 import AddTask from './pages/AddTask';
+import { RequireAuth } from "./components/RequireAuth";
 
 
 export function Router() {
@@ -24,6 +25,12 @@ export function Router() {
     return (
         <BrowserRouter>
             <Routes>
+                <Route path="/dashboard" element={
+                <RequireAuth>
+                    <Dashboard />
+                    </RequireAuth>
+                    }
+                    />
                 <Route path="/" element={<Homepage />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/signup" element={<SignUp/>} />

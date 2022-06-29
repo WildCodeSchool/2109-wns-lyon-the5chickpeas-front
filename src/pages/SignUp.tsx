@@ -2,38 +2,19 @@ import React, { useState } from 'react'
 import { Container } from './styles'
 import { Input, Form, ButtonSignUp } from '../components/FormElements';
 import logo from '../images/Logo.svg';
-import '../App.css'
-import {
-    gql,
-    useMutation
-} from "@apollo/client";
-//import { useHistory } from 'react-router-dom'; // replace by useNavigate in react-router-dom V6 
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/auth';
 
 
 const SignUp = () => {
-
     const [ pseudo, setPseudo] = useState('John')
     const [ email, setEmail ] = useState('john@gmail.com')
-    const [ password, setPassword ] = useState('password')
-    const [ confPassword, setConfPassword ] = useState('password')
-    const [ isSaved, setIsSaved ] = useState(false)
-    const [ validAccountToken, setValidAccountToken] = useState('')
-    //const [ error, setError ] = useState('')
-
+    const [ password, setPassword ] = useState('supersecret')
+    const [ validAccountToken, ] = useState('')
+    const [ failed, setFailed ] = useState(false);
+    const [ loading, setLoading ] = useState(false);const { signup } = useAuth();
     const navigate = useNavigate();
-
-    const [signup, { data, loading, error }] = useMutation(gql`
-        mutation Signup($pseudo: String!, $password: String!, $email: String!, $validAccountToken: String!) {
-        signup(pseudo: $pseudo, password: $password, email: $email, validAccountToken: $validAccountToken) {
-            pseudo
-            email
-            validAccountToken
-            }
-        }   
-    ` 
-    );
-
+    
     return (
         <>
             <Container>
@@ -44,28 +25,18 @@ const SignUp = () => {
                 <Form
                     onSubmit={async (e: React.SyntheticEvent) => {
                     e.preventDefault();
-                    /* const result = await post('http://localhost:3000', {
-                        email,
-                        password,
-                        confPassword
-                    });
-                    console.log(result); // eslint-disable-line no-console
-                    if (result.data.success) {
-                        setError('');
-                    } */
-                    console.log('Hey ', pseudo, email);
-                    console.log('You can check your email to validate your account...')
-                    signup({variables:{email: email, pseudo: pseudo, password:password, validAccountToken:validAccountToken},
-                    });
-                    setEmail('');
-                    setPseudo('');
-                    setPassword('');
-                    setValidAccountToken('');
-                    setIsSaved(true);
-                    navigate('/login');
-                    console.log('data:', data, isSaved)
-
-                
+                    
+                    const result = await signup(email, password, pseudo, validAccountToken);
+                    if (result) {
+                        setPseudo('');
+                        setPassword('');
+                        setEmail('');
+                        navigate('/dashboard', {replace:true});
+                        return
+                    } else {
+                        setFailed(true)
+                    }
+                    setLoading(false);
                     }}
                 >
                     <Input
@@ -95,20 +66,10 @@ const SignUp = () => {
                         setPassword(e.target.value)
                         }
                     />
-                    <Input
-                        id="confPassword-input"
-                        type="password"
-                        placeholder="Confirme your password"
-                        value={confPassword}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setConfPassword(e.target.value)
-                        }
-                    />
-                    {/*  {error !== '' && <Error>{error}</Error>} */}
-                    <ButtonSignUp>Sign Up</ButtonSignUp>
+                    <ButtonSignUp disabled={loading}>Sign Up</ButtonSignUp>
                     <a href='/login'>Already have an account? Sign in!</a>
-                    
                 </Form>
+                {failed && <p>Error</p>}
             </Container>
         </>
     )

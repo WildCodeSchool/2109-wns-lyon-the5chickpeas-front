@@ -1,14 +1,11 @@
-import React from 'react';
-import { useQuery } from "@apollo/client";
-import gql from "graphql-tag";
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 // styles
 import styled from 'styled-components';
 import { Container } from './styles';
 // components
 import HeadBar from '../components/HeadBar';
 import SideBar from '../components/SideBar';
-import { Input, Form, ButtonSignUp } from '../components/FormElements';
-import { ButtonCustom } from '../components/Button';
 import { TOTW } from '../components/TOTW';
 import { BoxNotification } from '../components/BoxNotification';
 import { Caroussel } from '../components/Caroussel';
@@ -36,7 +33,11 @@ function Dashboard() {
         margin: 5rem 0 0 40rem;
     `;
     const notifications: any[] = [];
-
+const location= useLocation()
+    useEffect(()=> {
+        console.log("location DHB", location)
+    },
+    [location])
     const datas = [
         {
             dataDescription: 'Initial time spent',
@@ -94,12 +95,10 @@ function Dashboard() {
                             <Title titletext='Last notifications'>
                             </Title>
                             {notifications.length > 0  ?
-                           
                                 notifications.map((notification) => (
                                     <BoxNotification date={notification.date} time={notification.time} notification={notification.notification} notificatedBy={notification.notificatedBy}>
                                     </BoxNotification>
                                 ))
-
                             : <BoxNotification notification={'No notifications.'}></BoxNotification>}
                         </div>
                     </div>
