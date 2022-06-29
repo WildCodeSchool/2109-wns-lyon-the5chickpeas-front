@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { Container } from "../../pages/styles";
-import { Input, Form } from "../../components/FormElements";
+import {
+  Input,
+  Form,
+  InputModal,
+  InputModalTextArea,
+} from "../../components/FormElements";
 import logo from "../../images/Logo.svg";
 import "../../App.css";
 import { useNavigate } from "react-router-dom";
@@ -9,13 +14,14 @@ import { ButtonCustom } from "../Button";
 import AddProject from "../../pages/AddProject";
 import { useMutation } from "@apollo/client/react/hooks/useMutation";
 import { gql } from "@apollo/client";
+import { autocompleteClasses, TextareaAutosize } from "@mui/material";
 
-const ProjectForm = ({ onCloseModal }: { onCloseModal: any }) => {
+const ProjectForm = ({ onCloseModal }: { onCloseModal: Function }) => {
   // Initialisation des champs pour l'entité PROJECT
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
   const [dueDate, setDueDate] = useState("");
-  const [estimatedTime, setEstimatedTime] = useState(0);
+  const [estimatedTime, setEstimatedTime] = useState<number>();
 
   // Preparation de la requete GraphQL
   const [AddProject, { data, loading }] = useMutation(gql`
@@ -47,51 +53,54 @@ const ProjectForm = ({ onCloseModal }: { onCloseModal: any }) => {
             };
 
             const result = await AddProject({ variables: { data: data } });
-            onCloseModal();
             //console.log(result);
           }}
         >
-          <Input
+          <InputModal
             id='name-input'
             type='text'
-            placeholder='Le nom de votre projet...'
+            placeholder='Name of your project...'
             value={name}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setName(e.target.value)
             }
           />
 
-          <Input
+          <InputModalTextArea
             id='description-input'
-            type='text'
-            placeholder='Une description du projet...'
+            placeholder='Description of your project...'
             value={description}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
               setDescription(e.target.value)
             }
+            rows={3}
           />
 
-          <Input
+          <InputModal
             id='dueDate-input'
             type='date'
-            placeholder='Le nom de votre projet...'
+            placeholder='Due date...'
             value={dueDate}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setDueDate(e.target.value)
             }
           />
 
-          <Input
+          <InputModal
             id='estimatedTime-input'
             type='number'
-            //placeholder="Votre estimation en heures du projet..."
+            placeholder='Time Estimation of your project...'
             value={estimatedTime}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setEstimatedTime(parseInt(e.target.value))
             }
           />
-
-          <ButtonCustom color={"white"}>{"Ajouter"}</ButtonCustom>
+          <div>
+            <ButtonCustom color={"white"}>Add</ButtonCustom>
+            <ButtonCustom color={"white"} onClick={() => onCloseModal()}>
+              Cancel
+            </ButtonCustom>
+          </div>
 
           {error !== "" && { error }}
         </Form>

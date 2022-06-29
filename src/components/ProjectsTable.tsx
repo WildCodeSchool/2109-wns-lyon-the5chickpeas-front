@@ -9,27 +9,36 @@ import BasicModal from "./Modal";
 import ProjectForm from "./forms/ProjectForm";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { Alert, CircularProgress, Snackbar } from "@mui/material";
-import ClearIcon from "@mui/icons-material/Clear";
-import EditIcon from "@mui/icons-material/Edit";
+import TableList from "../components/forms/Table";
 
-type projectType = {
+export interface ProjectType {
   id: number;
   manager_id: number;
   name: string;
   status_id: number;
   due_date: string;
   description: string;
-  intitial_time_estimee: number;
-};
-
+  inititial_time_estimee: number;
+}
+export interface Title {
+  title: string;
+}
 const ProjectsTable = () => {
   const navigation = useNavigate();
 
   const [isModal, setIsModal] = useState(false);
   const [message, setMessage] = useState("");
-  const [open, setOpen] = React.useState(false);
-  const [openAlert, setOpenAlert] = React.useState(false);
-  const [projectList, setProjectList] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [projectList, setProjectList] = useState<ProjectType[]>([]);
+  const titles: Title[] = [
+    { title: "Name" },
+    { title: "Status" },
+    { title: "Description" },
+    { title: "Due Date" },
+    { title: "Time estimation" },
+    { title: "Actions" },
+  ];
 
   // Preparation de la requete GraphQL
   const { data, loading, error, refetch } = useQuery(gql`
@@ -41,6 +50,7 @@ const ProjectsTable = () => {
       }
     }
   `);
+  // Edit Project
 
   // Rechargement de la page
   useEffect(() => {
@@ -57,7 +67,14 @@ const ProjectsTable = () => {
     }
   `);
 
-  const deletePro = async (projectId: number) => {
+  // Delete a project query
+  const [updateProject] = useMutation(gql`
+    mutation UpdateProject($updateProjectId: ID!) {
+      updateProject(id: $updateProjectId)
+    }
+  `);
+
+  const deletePro = async (projectId: number): Promise<void> => {
     const result = await deleteProject({
       variables: { deleteProjectId: projectId },
       refetchQueries: ["GetProjects"],
@@ -69,6 +86,8 @@ const ProjectsTable = () => {
       //refetch();
     }
   };
+
+  const updatePro = async () => {};
 
   const handleOpen = () => {
     setIsModal(true);
@@ -123,39 +142,11 @@ const ProjectsTable = () => {
       {loading ? (
         <CircularProgress />
       ) : (
-        <StyledTable id='projects'>
-          <>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Due Date</th>
-                <th>Description</th>
-                <th>Initial Time Estimee</th>
-                <th>Action(s)</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {projectList &&
-                projectList.map((project: projectType) => (
-                  <tr key={project.id}>
-                    <td>{project.name}</td>
-                    <td>{project.status_id}</td>
-                    <td>{project.due_date}</td>
-                    <td>{project.description}</td>
-                    <td>{project.intitial_time_estimee} heures</td>
-                    <td>
-                      <ClearIcon
-                        onClick={() => deletePro(project.id)}
-                      ></ClearIcon>
-                      <EditIcon></EditIcon>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </>
-        </StyledTable>
+        <TableList
+          titles={titles}
+          data={projectList}
+          onClickClear={deletePro}
+        />
       )}
     </Container>
   ) : (
