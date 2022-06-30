@@ -80,11 +80,11 @@ export function AuthProvider({
   useEffect(() => {
     //console.log('Connection status changed: ', !!getMeData);
     //console.log('User data is: ', getMeData?.getMe);
+    console.log('getmedata : ',getMeData);
+    
     if (getMeData) {
       setIsConnected(true);
-    } else {
-      setIsConnected(false);
-    }
+    } 
   }, [getMeData]);
   // should add signin, signup and signout here
   const signin = async (

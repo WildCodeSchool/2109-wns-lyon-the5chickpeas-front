@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import clipboard from '../images/icons/clipboard.png'
 import user from '../images/icons/user.png'
-import gear from '../images/icons/gear.png'
 import projectManagement from '../images/icons/project-management.png'
 import documentsFolder from '../images/icons/documents-folder.png'
 
@@ -10,7 +9,6 @@ import documentsFolder from '../images/icons/documents-folder.png'
 
 function SideBar() {
     return (
-        
         <SideBarStyled>
             <LinksSideBar href="/dashboard" style={{fontSize: "25px"}}>
                 <img src={projectManagement} alt={projectManagement}/>
@@ -28,11 +26,6 @@ function SideBar() {
                 <img src={user} alt={user}/>
                 <p>User Settings</p>
             </LinksSideBar>
-            <LinksSideBar href="/Miscellanious" >
-                <img src={gear} alt={gear}/>
-                <p>Miscellanious</p>
-            </LinksSideBar>
-            
         </SideBarStyled>
     )
 };

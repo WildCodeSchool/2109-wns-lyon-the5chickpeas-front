@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/auth";
 
 const Login = () => {
-  const [email, setEmail] = useState("do@gmail.com");
+  const [email, setEmail] = useState("test@test.com");
   const [failed, setFailed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("test");
@@ -40,7 +40,7 @@ const Login = () => {
               setPassword("");
               setValidAccountToken("");
               // Redirection dashboard
-              navigate("/dashboard", { replace: true });
+              navigate("/dashboard");
               return;
             } else {
               // traitement des messages d'erreurs => Affichage des msg retournés par le back

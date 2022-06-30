@@ -9,8 +9,12 @@ import view from '../images/view.png';
 import { BtnWhite } from './styles';
 // react router 
 import { Link } from 'react-router-dom';
+import { useAuth } from '../hooks/auth';
 
 function Homepage() {
+    const {isConnected} = useAuth();
+    console.log('isconnected login : ',isConnected);
+    
     return (
         <Container>
             <NavBarStyled>

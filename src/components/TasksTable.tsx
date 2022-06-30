@@ -80,7 +80,7 @@ const TasksTable = () => {
       {tasks.map((task: tasksType)=> (
 
         
-          <tr onClick={() =>  navigation(`/project/${task.project}/task/${task.id}`, { replace: true })} key={task.id}>
+          <tr onClick={() =>  navigation(`/project/${task.project}/task/${task.id}`)} key={task.id}>
             <td>{task.subject}</td>
             <td>{task.project}</td>
             <td>{task.status_id}</td>
