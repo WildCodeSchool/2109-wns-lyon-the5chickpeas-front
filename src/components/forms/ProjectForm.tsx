@@ -14,14 +14,29 @@ import { ButtonCustom } from "../Button";
 import AddProject from "../../pages/AddProject";
 import { useMutation } from "@apollo/client/react/hooks/useMutation";
 import { gql } from "@apollo/client";
-import { autocompleteClasses, TextareaAutosize } from "@mui/material";
+import {
+  autocompleteClasses,
+  Box,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  TextareaAutosize,
+} from "@mui/material";
 
-const ProjectForm = ({ onCloseModal }: { onCloseModal: Function }) => {
+const ProjectForm = ({
+  onCloseModal,
+  statusList,
+}: {
+  onCloseModal: Function;
+  statusList: string[];
+}) => {
   // Initialisation des champs pour l'entité PROJECT
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [estimatedTime, setEstimatedTime] = useState<number>();
+  const [selectedStatus, setSelectedStatus] = useState("");
 
   // Preparation de la requete GraphQL
   const [AddProject, { data, loading }] = useMutation(gql`
@@ -34,8 +49,6 @@ const ProjectForm = ({ onCloseModal }: { onCloseModal: Function }) => {
   `);
 
   const [error, setError] = useState("");
-  const { signin } = useAuth();
-  const navigate = useNavigate();
 
   return (
     <>
@@ -65,6 +78,25 @@ const ProjectForm = ({ onCloseModal }: { onCloseModal: Function }) => {
               setName(e.target.value)
             }
           />
+          <Box display='flex' width='100%' alignItems='center'>
+            <InputLabel id='demo-simple-select-standard-label' sx={{ mr: 1 }}>
+              Status
+            </InputLabel>
+            <Select
+              sx={{ flex: 1 }}
+              labelId='demo-simple-select-standard-label'
+              id='demo-simple-select-standard'
+              value={statusList[0]}
+              label='Status'
+              onChange={(event: SelectChangeEvent) =>
+                setSelectedStatus(event.target.value)
+              }
+            >
+              {statusList.map((status) => (
+                <MenuItem value={status}>{status}</MenuItem>
+              ))}
+            </Select>
+          </Box>
 
           <InputModalTextArea
             id='description-input'

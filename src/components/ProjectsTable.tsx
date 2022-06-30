@@ -39,6 +39,13 @@ const ProjectsTable = () => {
     { title: "Time estimation" },
     { title: "Actions" },
   ];
+  const status = {
+    0: "To do",
+    1: "On pending",
+    2: "Done",
+  };
+
+  const statusList = Object.values(status);
 
   // Preparation de la requete GraphQL
   const { data, loading, error, refetch } = useQuery(gql`
@@ -69,8 +76,32 @@ const ProjectsTable = () => {
 
   // Delete a project query
   const [updateProject] = useMutation(gql`
-    mutation UpdateProject($updateProjectId: ID!) {
-      updateProject(id: $updateProjectId)
+    mutation UpdateProject(
+      $name: String!
+      $updateProjectId: ID!
+      $statusId: Float!
+      $description: String!
+      $estimatedTime: Float!
+      $managersIds: [Float!]!
+    ) {
+      updateProject(
+        name: $name
+        id: $updateProjectId
+        statusId: $statusId
+        description: $description
+        estimatedTime: $estimatedTime
+        managersIds: $managersIds
+      ) {
+        name
+        description
+        status {
+          id
+          code
+        }
+        managers {
+          id
+        }
+      }
     }
   `);
 
@@ -131,6 +162,7 @@ const ProjectsTable = () => {
         {isModal && (
           <BasicModal open={open} handleClose={handleClose}>
             <ProjectForm
+              statusList={statusList}
               onCloseModal={() => {
                 handleCloseModal();
               }}
@@ -146,6 +178,7 @@ const ProjectsTable = () => {
           titles={titles}
           data={projectList}
           onClickClear={deletePro}
+          onClickEdit={updatePro}
         />
       )}
     </Container>

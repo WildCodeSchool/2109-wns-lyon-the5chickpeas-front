@@ -14,22 +14,32 @@ export default function TableList({
   data,
   titles,
   onClickClear,
+  onClickEdit,
 }: {
   data: ProjectType[];
   titles: { title: string }[];
   onClickClear: (e: any) => void;
+  onClickEdit: (e: any) => void;
 }) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label='simple table'>
         <TableHead>
           <TableRow>
-            <TableCell>{titles[0].title}</TableCell>
-            <TableCell align='right'>{titles[1].title}</TableCell>
-            <TableCell align='right'>{titles[2].title}</TableCell>
-            <TableCell align='right'>{titles[3].title}</TableCell>
-            <TableCell align='right'>{titles[4].title}</TableCell>
-            <TableCell align='center' colSpan={2}>
+            <TableCell sx={{ fontWeight: "bold" }}>{titles[0].title}</TableCell>
+            <TableCell sx={{ fontWeight: "bold" }} align='right'>
+              {titles[1].title}
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }} align='right'>
+              {titles[2].title}
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }} align='right'>
+              {titles[3].title}
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }} align='right'>
+              {titles[4].title}
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }} align='center' colSpan={2}>
               {titles[5].title}
             </TableCell>
           </TableRow>
@@ -52,9 +62,9 @@ export default function TableList({
               <TableCell>
                 <ClearIcon onClick={() => onClickClear(project.id)} />
               </TableCell>
-              {/* <TableCell>
-                <EditIcon onClick={() => onClickEdit()} />
-              </TableCell> */}
+              <TableCell>
+                <EditIcon onClick={() => onClickEdit(project.id)} />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
