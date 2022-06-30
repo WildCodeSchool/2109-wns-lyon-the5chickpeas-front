@@ -4,25 +4,28 @@ import clipboard from '../images/icons/clipboard.png'
 import user from '../images/icons/user.png'
 import projectManagement from '../images/icons/project-management.png'
 import documentsFolder from '../images/icons/documents-folder.png'
+import { useNavigate } from 'react-router-dom';
 
 
 
 function SideBar() {
+    const navigate = useNavigate();
+
     return (
         <SideBarStyled>
-            <LinksSideBar href="/dashboard" style={{fontSize: "25px"}}>
+            <LinksSideBar onClick={() => {navigate("/dashboard")}}  style={{fontSize: "25px"}}>
                 <img src={projectManagement} alt={projectManagement}/>
                 <p>Dashboard</p>
             </LinksSideBar>
-            <LinksSideBar href="/projectsList" >
+            <LinksSideBar onClick={() => {navigate("/projectsList")}}>
                 <img src={clipboard} alt={clipboard}/>
                 <p>Projects List</p>
             </LinksSideBar>
-            <LinksSideBar href="/tasksList" >
+            <LinksSideBar onClick={() => {navigate("/tasksList")}}>
                 <img src={documentsFolder} alt={documentsFolder}/>
                 <p>Tasks List</p>
             </LinksSideBar>
-            <LinksSideBar href="/profile">
+            <LinksSideBar onClick={() => {navigate("/profile")}}>
                 <img src={user} alt={user}/>
                 <p>User Settings</p>
             </LinksSideBar>
@@ -56,6 +59,7 @@ const LinksSideBar = styled.a `
     padding: 10px;
     text-decoration: none;
     color: black;
+    cursor: pointer;
 
     p {
     font-size: 25px;
