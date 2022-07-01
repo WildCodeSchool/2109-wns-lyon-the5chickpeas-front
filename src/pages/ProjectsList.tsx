@@ -14,7 +14,7 @@ import { CBHideDone, CBManagedByMe } from "../components/Checkboxes";
 export type Project = {
   manager_id: number;
   name: string;
-  status_id: number;
+  status: number;
   due_date: string;
   description: string;
   intitial_time_estimee: number;

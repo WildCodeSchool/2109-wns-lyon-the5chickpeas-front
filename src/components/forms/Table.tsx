@@ -39,8 +39,11 @@ export default function TableList({
             <TableCell sx={{ fontWeight: "bold" }} align='right'>
               {titles[4].title}
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} align='center' colSpan={2}>
+            <TableCell sx={{ fontWeight: "bold" }} align='center'>
               {titles[5].title}
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }} align='center' colSpan={2}>
+              {titles[6].title}
             </TableCell>
           </TableRow>
         </TableHead>
@@ -53,17 +56,18 @@ export default function TableList({
               <TableCell component='th' scope='row'>
                 {project.name}
               </TableCell>
+              <TableCell align='right'>{project.description}</TableCell>
               <TableCell align='right'>{project.status_id}</TableCell>
               <TableCell align='right'>{project.due_date}</TableCell>
-              <TableCell align='right'>{project.description}</TableCell>
               <TableCell align='right'>
                 {project.inititial_time_estimee}
               </TableCell>
-              <TableCell>
-                <ClearIcon onClick={() => onClickClear(project.id)} />
-              </TableCell>
+              <TableCell align='right'>{project.manager_id}</TableCell>
               <TableCell>
                 <EditIcon onClick={() => onClickEdit(project.id)} />
+              </TableCell>
+              <TableCell>
+                <ClearIcon onClick={() => onClickClear(project.id)} />
               </TableCell>
             </TableRow>
           ))}

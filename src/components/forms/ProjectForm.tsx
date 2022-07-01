@@ -1,54 +1,62 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "../../pages/styles";
 import {
-  Input,
   Form,
   InputModal,
   InputModalTextArea,
 } from "../../components/FormElements";
-import logo from "../../images/Logo.svg";
 import "../../App.css";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../hooks/auth";
 import { ButtonCustom } from "../Button";
-import AddProject from "../../pages/AddProject";
-import { useMutation } from "@apollo/client/react/hooks/useMutation";
-import { gql } from "@apollo/client";
+//import { useMutation, useQuery } from "@apollo/client/react/hooks/useMutation";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import {
-  autocompleteClasses,
   Box,
   InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
-  TextareaAutosize,
 } from "@mui/material";
+import { ProjectType } from "../ProjectsTable";
+
+interface Status {
+  name: string;
+  id: number;
+}
 
 const ProjectForm = ({
   onCloseModal,
-  statusList,
-}: {
+  dataGetStatus,
+  isUpdated,
+}: //dataGetProject,
+{
   onCloseModal: Function;
-  statusList: string[];
+  dataGetStatus: Array<Status>;
+  isUpdated: boolean;
+  //dataGetProject: ProjectType;
 }) => {
   // Initialisation des champs pour l'entité PROJECT
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [estimatedTime, setEstimatedTime] = useState<number>();
-  const [selectedStatus, setSelectedStatus] = useState("");
+  const [managers, setManagers] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState<number>();
+  const [error, setError] = useState("");
 
   // Preparation de la requete GraphQL
   const [AddProject, { data, loading }] = useMutation(gql`
     mutation AddProject($data: ProjectInput!) {
       addProject(data: $data) {
         name
+        status {
+          name
+        }
         description
+        dueDate
+        estimatedTime
       }
     }
   `);
-
-  const [error, setError] = useState("");
 
   return (
     <>
@@ -59,14 +67,14 @@ const ProjectForm = ({
 
             // Traitement ==> Fetch en grapgQL
             const data = {
-              description: description,
-              name: name,
-              dueDate: dueDate,
-              estimatedTime: estimatedTime,
+              description,
+              name,
+              status_id: selectedStatus,
+              dueDate,
+              estimatedTime,
             };
 
-            const result = await AddProject({ variables: { data: data } });
-            //console.log(result);
+            await AddProject({ variables: { data: data } });
           }}
         >
           <InputModal
@@ -86,14 +94,14 @@ const ProjectForm = ({
               sx={{ flex: 1 }}
               labelId='demo-simple-select-standard-label'
               id='demo-simple-select-standard'
-              value={statusList[0]}
+              value={"" + selectedStatus}
               label='Status'
               onChange={(event: SelectChangeEvent) =>
-                setSelectedStatus(event.target.value)
+                setSelectedStatus(parseInt(event.target.value))
               }
             >
-              {statusList.map((status) => (
-                <MenuItem value={status}>{status}</MenuItem>
+              {dataGetStatus.map((s) => (
+                <MenuItem value={s.id}>{s.name}</MenuItem>
               ))}
             </Select>
           </Box>
@@ -127,6 +135,15 @@ const ProjectForm = ({
               setEstimatedTime(parseInt(e.target.value))
             }
           />
+          {/* {isUpdated && <InputModal
+            id='manager-input'
+            type='string'
+            placeholder='Manager'
+            value={managers}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setManagers(e.target.value)
+            }
+          />} */}
           <div>
             <ButtonCustom color={"white"}>Add</ButtonCustom>
             <ButtonCustom color={"white"} onClick={() => onCloseModal()}>

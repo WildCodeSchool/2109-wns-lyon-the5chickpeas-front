@@ -23,6 +23,71 @@ export interface ProjectType {
 export interface Title {
   title: string;
 }
+
+const GET_STATUS = gql`
+  query GetStatus {
+    getStatus {
+      name
+      id
+    }
+  }
+`;
+const GET_PROJECTS = gql`
+  query GetProjects {
+    getProjects {
+      id
+      name
+      description
+      dueDate
+      estimatedTime
+      status {
+        name
+      }
+      managers {
+        id
+      }
+    }
+  }
+`;
+const GET_PROJECT = gql`
+  query GetProject($getProjectId: ID!) {
+    getProject(id: $getProjectId) {
+      id
+      name
+      description
+      dueDate
+      estimatedTime
+      status {
+        name
+      }
+      managers {
+        id
+      }
+    }
+  }
+`;
+
+const DELETE_PROJECT = gql`
+  mutation DeleteProject($deleteProjectId: ID!) {
+    deleteProject(id: $deleteProjectId)
+  }
+`;
+
+const UPDATE_PROJECT = gql`
+  mutation UpdateProject($updateProjectId: ID!) {
+    updateProject(id: $updateProjectId) {
+      name
+      description
+      status {
+        name
+      }
+      managers {
+        id
+      }
+    }
+  }
+`;
+
 const ProjectsTable = () => {
   const navigation = useNavigate();
 
@@ -31,33 +96,34 @@ const ProjectsTable = () => {
   const [open, setOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const [projectList, setProjectList] = useState<ProjectType[]>([]);
+  const [isUpdated, setIsUpdated] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState<number>();
+
   const titles: Title[] = [
     { title: "Name" },
-    { title: "Status" },
     { title: "Description" },
+    { title: "Status" },
     { title: "Due Date" },
     { title: "Time estimation" },
+    { title: "Managers" },
     { title: "Actions" },
   ];
-  const status = {
-    0: "To do",
-    1: "On pending",
-    2: "Done",
-  };
-
-  const statusList = Object.values(status);
 
   // Preparation de la requete GraphQL
-  const { data, loading, error, refetch } = useQuery(gql`
-    query GetProjects {
-      getProjects {
-        id
-        name
-        description
-      }
+  const { data, loading, error, refetch } = useQuery(GET_PROJECTS);
+  const { data: dataGetProject } = useQuery(GET_PROJECT, {
+    variables: {
+      getProjectId: selectedProjectId,
+    },
+  });
+  const { data: dataGetStatus } = useQuery(GET_STATUS);
+
+  useEffect(() => {
+    if (dataGetProject) {
+      //updatePro(selectedProjectId);
+      console.log("sorti dataGetProject", dataGetProject);
     }
-  `);
-  // Edit Project
+  }, [dataGetProject]);
 
   // Rechargement de la page
   useEffect(() => {
@@ -68,42 +134,10 @@ const ProjectsTable = () => {
   }, [data]);
 
   // Delete a project query
-  const [deleteProject] = useMutation(gql`
-    mutation DeleteProject($deleteProjectId: ID!) {
-      deleteProject(id: $deleteProjectId)
-    }
-  `);
+  const [deleteProject] = useMutation(DELETE_PROJECT);
 
   // Delete a project query
-  const [updateProject] = useMutation(gql`
-    mutation UpdateProject(
-      $name: String!
-      $updateProjectId: ID!
-      $statusId: Float!
-      $description: String!
-      $estimatedTime: Float!
-      $managersIds: [Float!]!
-    ) {
-      updateProject(
-        name: $name
-        id: $updateProjectId
-        statusId: $statusId
-        description: $description
-        estimatedTime: $estimatedTime
-        managersIds: $managersIds
-      ) {
-        name
-        description
-        status {
-          id
-          code
-        }
-        managers {
-          id
-        }
-      }
-    }
-  `);
+  const [updateProject] = useMutation(UPDATE_PROJECT);
 
   const deletePro = async (projectId: number): Promise<void> => {
     const result = await deleteProject({
@@ -117,8 +151,31 @@ const ProjectsTable = () => {
       //refetch();
     }
   };
-
-  const updatePro = async () => {};
+  useEffect(() => {
+    console.log("selectedProjectId", selectedProjectId);
+  });
+  const updatePro = async (projectId: number): Promise<void> => {
+    setIsUpdated(true);
+    setSelectedProjectId(projectId);
+    handleOpen();
+    <BasicModal open={open} handleClose={handleClose}>
+      <ProjectForm
+        dataGetStatus={dataGetStatus.getStatus}
+        //dataGetProject={dataGetProject.getProject}
+        isUpdated={isUpdated}
+        onCloseModal={() => {
+          handleCloseModal();
+        }}
+      />
+    </BasicModal>;
+    // const result = await updateProject({
+    //   variables: { updateProjectId: projectId },
+    //   refetchQueries: ["GetProjects"],
+    // });
+    // if (result.data.updateProject) {
+    //   setOpenAlert(true);
+    // }
+  };
 
   const handleOpen = () => {
     setIsModal(true);
@@ -136,11 +193,6 @@ const ProjectsTable = () => {
     handleCloseModal();
   }, []);
 
-  // Gestion des erreurs de l'appel
-  if (error) {
-    setMessage("Une erreur est survenue, pensez à vous identifier !");
-  }
-
   return !loading || !error ? (
     <Container>
       <Snackbar
@@ -153,16 +205,18 @@ const ProjectsTable = () => {
           severity='success'
           sx={{ width: "100%" }}
         >
-          Le project a été supprimé avec succès !
+          Project has been successfully deleted!
         </Alert>
       </Snackbar>
       <div className='flex-custom flex row'>
         <h1 id='title'>Projects List</h1>
-        <ButtonCustom onClick={handleOpen}>Ajouter un projet</ButtonCustom>
+        <ButtonCustom onClick={handleOpen}>Add a project</ButtonCustom>
         {isModal && (
           <BasicModal open={open} handleClose={handleClose}>
             <ProjectForm
-              statusList={statusList}
+              isUpdated={isUpdated}
+              //dataGetProject={dataGetProject.getProject(1)}
+              dataGetStatus={dataGetStatus.getStatus}
               onCloseModal={() => {
                 handleCloseModal();
               }}
