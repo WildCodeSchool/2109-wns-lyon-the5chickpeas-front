@@ -31,7 +31,7 @@ const SignUp = () => {
                         setPseudo('');
                         setPassword('');
                         setEmail('');
-                        navigate('/dashboard', {replace:true});
+                        navigate('/dashboard');
                         return
                     } else {
                         setFailed(true)

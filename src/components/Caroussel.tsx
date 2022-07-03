@@ -7,20 +7,17 @@ import { Chip } from './Chip';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import { Text } from './TOTW';
+import { useNavigate } from "react-router-dom";
 
-
-const StyledCaroussel = styled.div`
-    min-width: 75%;
-    margin: 3rem auto 5em auto;
-`;
 const StyledTaskCard = styled.div`
     border-radius: 20px;
     background-color: seashell;
     padding: 1rem;
     display: block;
     margin: auto 1.5rem;
-    
     min-height: 11rem;
+    text-align: left;
+    cursor: pointer;
 `;
 const FlexSpaceBetween = styled.div`
     display: flex;
@@ -33,8 +30,13 @@ const FlexSpaceBetween = styled.div`
 export const GET_TASKS = gql`
     query GetTasks {
         getTasks {
-        subject
-        description
+            id
+            subject
+            description
+            status {
+                id
+                name
+            }
         }
     }
 `;
@@ -43,6 +45,8 @@ const responsive = {
     568: { items: 2 },
     1024: { items: 3 },
 };
+
+const MAX_LENGTH = 50;
 
 export function Caroussel() {
     // hooks
@@ -53,20 +57,16 @@ export function Caroussel() {
     const onInitialized = (e: { item: any; }) => {
         console.debug(`Start position(activeIndex) on init: ${e.item}. Event:`, e);
     };
-    
     const onSlideChange = (e: { item: any; }) => {
         console.debug(`Item's position before a change: ${e.item}. Event:`, e);
     };
-    
     const onSlideChanged = (e: { item: any; }) => {
         console.debug(`Item's position after changes: ${e.item}. Event:`, e);
     };
-    
     const onResized = (e: { item: any; }) => {
         console.debug(`Item's position after resize: ${e.item}. Event:`, e);
     };
 
-    // useEffect
     useEffect(() => {
         ;(async() => {
             try{
@@ -74,7 +74,7 @@ export function Caroussel() {
                 if (tasksData) {
                     setTasks(tasksData)
                 }
-                console.log(tasksData);
+                console.log('tasksdata : ',tasksData);
                 
             } catch(e) {
                 console.log(e);
@@ -82,7 +82,8 @@ export function Caroussel() {
         })
     ()},[data])
     
-
+    const navigate = useNavigate();
+    
     return (
     <div>
         <Container>
@@ -96,15 +97,16 @@ export function Caroussel() {
             onResized={onResized}
         >
             {tasks?.map((task: any) => 
-            <StyledTaskCard key={task.id}>
+            <StyledTaskCard key={task.id} onClick={() =>  navigate(`/task/${task.id}`)}>
                 <FlexSpaceBetween>
                 {task.subject} 
                 </FlexSpaceBetween>
                 <Text fontSize='medium' margin='1.5rem 0;'>
-                    {task.description}
+                    {task.description.substring(0, MAX_LENGTH)}
+                    {task.description.length > MAX_LENGTH ? '...' : ''}
                 </Text>
                 <div className='flex-custom'>
-                    <Chip background={'blue'}>
+                    <Chip background={'#4fc775'}>
                         {task.subject}
                     </Chip>
                 </div>

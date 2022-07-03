@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React from 'react';
 // styles
 import styled from 'styled-components';
 import { Container } from './styles';
@@ -11,33 +10,9 @@ import { BoxNotification } from '../components/BoxNotification';
 import { Caroussel } from '../components/Caroussel';
 import { Title } from '../components/Title';
 
-
-// export const GET_PROFILE = gql`
-//     query getProfile {
-//         getProfile {
-//             id
-//             email
-//         }
-//     }
-// `;
-
-
 function Dashboard() {
-    // const { data, error } = useQuery(GET_PROFILE);
-    
-    const StyledCaroussel=styled.div`
-        width: 70rem;
-        border: 1px solid green;
-        display: flex;
-        justify-content: space-between;
-        margin: 5rem 0 0 40rem;
-    `;
     const notifications: any[] = [];
-const location= useLocation()
-    useEffect(()=> {
-        console.log("location DHB", location)
-    },
-    [location])
+
     const datas = [
         {
             dataDescription: 'Initial time spent',
@@ -82,11 +57,9 @@ const location= useLocation()
                             <Title titletext='Time of the week'>
                             </Title>
                             {datas.map((data) => (
-                                
                                 <TOTW buttontext={data.dataStats} >
                                     {data.dataDescription}
                                 </TOTW>
-
                             ))} 
                         </div>
                         

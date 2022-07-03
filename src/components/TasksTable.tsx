@@ -3,20 +3,12 @@ import { Container } from '../pages/styles'
 import { StyledTable } from './TableElements'
 import { CBAssignedToMe, CBHideDone, CBHighPriority } from './Checkboxes'
 import { useNavigate } from "react-router-dom";
+import { tasksType } from '../interfaces/tasksType';
 
 const TasksTable = () => {
 
   const navigation = useNavigate();
 
-  interface tasksType {
-    id: number,
-    subject: string,
-    project: string,
-    status_id: number,
-    assignee: string,
-    due_date: string
-
-  }
   const tasks: tasksType[] = [
       {
         id: 1,
@@ -50,12 +42,8 @@ const TasksTable = () => {
         assignee: "Cerise",
         due_date: "02/06/22"
       } 
-      
   ];
 
-    console.log('====================================');
-    console.log(tasks);
-    console.log('====================================');
   return (
     <Container>
       <h1 id='title'>Tasks List</h1>
@@ -78,25 +66,18 @@ const TasksTable = () => {
       </thead>
       <tbody>
       {tasks.map((task: tasksType)=> (
-
-        
-          <tr onClick={() =>  navigation(`/project/${task.project}/task/${task.id}`, { replace: true })} key={task.id}>
+          <tr onClick={() =>  navigation(`/task/${task.id}`)} key={task.id} style={{ cursor:"pointer" }}>
             <td>{task.subject}</td>
             <td>{task.project}</td>
             <td>{task.status_id}</td>
             <td>{task.assignee}</td>
             <td>{task.due_date}</td>
           </tr>
-
-
       ))}
       </tbody>
       </StyledTable>
-      
     </Container>
   )
 }
-
-  
 
 export default TasksTable

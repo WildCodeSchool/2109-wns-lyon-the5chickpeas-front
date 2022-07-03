@@ -18,6 +18,7 @@ import Profile from './pages/Profile';
 import AddProject from './pages/AddProject';
 import AddTask from './pages/AddTask';
 import { RequireAuth } from "./components/RequireAuth";
+import SideBar from './components/SideBar';
 
 
 export function Router() {
@@ -30,7 +31,7 @@ export function Router() {
                     <Dashboard />
                     </RequireAuth>
                     }
-                    />
+                />
                 <Route path="/" element={<Homepage />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/signup" element={<SignUp/>} />
@@ -41,7 +42,7 @@ export function Router() {
                 <Route path="/dashboard" element={<Dashboard/>} />
                 <Route path="/addProject" element={<AddProject/>} />
                 <Route path="/addTask" element={<AddTask/>} />
-                <Route path="/project/:projectSlug/task/:taskId" element={<TaskDetail/>} />
+                <Route path="/task/:taskId" element={<TaskDetail/>} />
             </Routes>
         </BrowserRouter>
     )

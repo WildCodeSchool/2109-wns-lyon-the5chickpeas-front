@@ -9,10 +9,10 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/auth";
 
 const Login = () => {
-  const [email, setEmail] = useState("do@gmail.com");
+  const [email, setEmail] = useState("kaniha@gmail.com");
   const [failed, setFailed] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [password, setPassword] = useState("test");
+  const [password, setPassword] = useState("aza");
   const [validAccountToken, setValidAccountToken] = useState("");
   const [open, setOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
@@ -40,7 +40,7 @@ const Login = () => {
               setPassword("");
               setValidAccountToken("");
               // Redirection dashboard
-              navigate("/dashboard", { replace: true });
+              navigate("/dashboard");
               return;
             } else {
               // traitement des messages d'erreurs => Affichage des msg retournés par le back
