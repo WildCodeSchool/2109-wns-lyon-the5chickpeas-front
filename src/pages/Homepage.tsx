@@ -9,12 +9,8 @@ import view from '../images/view.png';
 import { BtnWhite } from './styles';
 // react router 
 import { Link } from 'react-router-dom';
-import { useAuth } from '../hooks/auth';
 
 function Homepage() {
-    const {isConnected} = useAuth();
-    console.log('isconnected login : ',isConnected);
-    
     return (
         <Container>
             <NavBarStyled>
@@ -22,7 +18,7 @@ function Homepage() {
                     <Link id="logo" to="/">
                         <img src={logo} alt="5 chickpeas"/>
                     </Link>
-                    <span>WildMine</span>
+                    <span>WildMind</span>
                 </div>
                 <div>
                     <Link to="/login">
@@ -37,13 +33,13 @@ function Homepage() {
                 <h1>More than a job. It's a way of working together</h1>
                 <ContentStyled>
                     <LeftBoxStyled>
-                        <h2>Collaborate, manage projects and reach new heights in productivity with <span>WildMine</span>.</h2>
+                        <h2>Collaborate, manage projects and reach new heights in productivity with <span>WildMind</span>.</h2>
                         <div>
                             <h2>Developed by</h2>
                             <img src={logo} alt="5 chickpeas" />
                         </div>
                     </LeftBoxStyled>
-                    <ViewStyled src={view} alt="Wildmine view" />
+                    <ViewStyled src={view} alt="Wildmind view" />
                 </ContentStyled>
                 <Link to="/signup">
                     <BtnStartNow>Start now !</BtnStartNow>

@@ -1,11 +1,12 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { createContext, useContext, useEffect, useState } from "react";
 
-const GET_ME = gql`
+export const GET_ME = gql`
   query getMe {
     getMe {
       id
       email
+      pseudo
     }
   }
 `;
@@ -78,10 +79,6 @@ export function AuthProvider({
   const { data: getMeData, refetch } = useQuery(GET_ME);
 
   useEffect(() => {
-    //console.log('Connection status changed: ', !!getMeData);
-    //console.log('User data is: ', getMeData?.getMe);
-    console.log('getmedata : ',getMeData);
-    
     if (getMeData) {
       setIsConnected(true);
     } 

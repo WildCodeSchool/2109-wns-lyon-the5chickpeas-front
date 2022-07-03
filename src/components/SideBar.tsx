@@ -13,7 +13,7 @@ function SideBar() {
 
     return (
         <SideBarStyled>
-            <LinksSideBar onClick={() => {navigate("/dashboard")}}  style={{fontSize: "25px"}}>
+            <LinksSideBar onClick={() => {navigate("/dashboard")}}>
                 <img src={projectManagement} alt={projectManagement}/>
                 <p>Dashboard</p>
             </LinksSideBar>

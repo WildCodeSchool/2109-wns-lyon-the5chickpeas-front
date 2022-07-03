@@ -2,28 +2,31 @@ import React from 'react';
 import styled from 'styled-components';
 // images
 import logo from '../images/Logo.svg';
-import profile from '../images/profile.png';
+// import profile from '../images/profile.png';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/auth';
 import { BtnWhite } from '../pages/styles';
+import { GET_ME } from '../hooks/auth';
+import { useQuery } from '@apollo/client';
 
 function HeadBar() {
-    const {isConnected, signout} = useAuth()
+    const {isConnected, signout} = useAuth();
+    const { data } = useQuery(GET_ME);
     return (
         <HeadBarStyled>
             <div>
                 <Link id="logo" to="/">
                     <img src={logo} alt="5 chickpeas"/>
                 </Link>
-                <span>WildMine</span>
+                <span>WildMind</span>
             </div>
             <RightElement>
                 {/* ? if user is log in show profile */}
                 {/* get user's photo */}
                 {/* get user's name */}
                 {/* ? get user's notification */}
-                <ProfileStyled src={profile} alt="profile" />
-                <h3>Welcome </h3>
+                {/* <ProfileStyled src={profile} alt="profile" /> */}
+                <h3>Welcome {data ? data.getMe.pseudo : "Not connected"}</h3>
                 {isConnected && 
                 <Link to="/">
                     <BtnWhite style={{marginLeft: "10px"}} onClick={signout}>Logout</BtnWhite>

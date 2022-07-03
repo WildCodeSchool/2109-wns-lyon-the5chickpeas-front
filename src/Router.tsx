@@ -41,7 +41,7 @@ export function Router() {
                 <Route path="/dashboard" element={<Dashboard/>} />
                 <Route path="/addProject" element={<AddProject/>} />
                 <Route path="/addTask" element={<AddTask/>} />
-                <Route path="/project/:projectSlug/task/:taskId" element={<TaskDetail/>} />
+                <Route path="/task/:taskId" element={<TaskDetail/>} />
             </Routes>
         </BrowserRouter>
     )

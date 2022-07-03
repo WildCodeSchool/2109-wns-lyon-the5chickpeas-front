@@ -9,10 +9,10 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/auth";
 
 const Login = () => {
-  const [email, setEmail] = useState("test@test.com");
+  const [email, setEmail] = useState("kaniha@gmail.com");
   const [failed, setFailed] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [password, setPassword] = useState("test");
+  const [password, setPassword] = useState("aza");
   const [validAccountToken, setValidAccountToken] = useState("");
   const [open, setOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);

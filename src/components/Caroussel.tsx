@@ -30,8 +30,13 @@ const FlexSpaceBetween = styled.div`
 export const GET_TASKS = gql`
     query GetTasks {
         getTasks {
-        subject
-        description
+            id
+            subject
+            description
+            status {
+                id
+                name
+            }
         }
     }
 `;
@@ -69,7 +74,7 @@ export function Caroussel() {
                 if (tasksData) {
                     setTasks(tasksData)
                 }
-                console.log(tasksData);
+                console.log('tasksdata : ',tasksData);
                 
             } catch(e) {
                 console.log(e);
@@ -92,7 +97,7 @@ export function Caroussel() {
             onResized={onResized}
         >
             {tasks?.map((task: any) => 
-            <StyledTaskCard key={task.id} onClick={() =>  navigate(`/project/${task.project}/task/${task.id}`)}>
+            <StyledTaskCard key={task.id} onClick={() =>  navigate(`/task/${task.id}`)}>
                 <FlexSpaceBetween>
                 {task.subject} 
                 </FlexSpaceBetween>

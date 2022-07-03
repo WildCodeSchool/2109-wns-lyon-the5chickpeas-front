@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React from 'react';
 // styles
 import styled from 'styled-components';
 import { Container } from './styles';
@@ -10,32 +9,8 @@ import { TOTW } from '../components/TOTW';
 import { BoxNotification } from '../components/BoxNotification';
 import { Caroussel } from '../components/Caroussel';
 import { Title } from '../components/Title';
-import { useAuth } from '../hooks/auth';
-
-
-// export const GET_PROFILE = gql`
-//     query getProfile {
-//         getProfile {
-//             id
-//             email
-//         }
-//     }
-// `;
-
 
 function Dashboard() {
-    // const { data, error } = useQuery(GET_PROFILE);
-    const {isConnected} = useAuth();
-    console.log('isconnected : ',isConnected);
-    
-    
-    const StyledCaroussel=styled.div`
-        width: 70rem;
-        border: 1px solid green;
-        display: flex;
-        justify-content: space-between;
-        margin: 5rem 0 0 40rem;
-    `;
     const notifications: any[] = [];
 
     const datas = [
@@ -82,11 +57,9 @@ function Dashboard() {
                             <Title titletext='Time of the week'>
                             </Title>
                             {datas.map((data) => (
-                                
                                 <TOTW buttontext={data.dataStats} >
                                     {data.dataDescription}
                                 </TOTW>
-
                             ))} 
                         </div>
                         
