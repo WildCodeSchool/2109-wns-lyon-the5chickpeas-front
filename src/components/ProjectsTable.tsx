@@ -154,9 +154,9 @@ const ProjectsTable = () => {
       //refetch();
     }
   };
-  useEffect(() => {
-    console.log("selectedProjectId", selectedProjectId);
-  });
+  // useEffect(() => {
+  //   console.log("selectedProjectId", selectedProjectId);
+  // });
   const updatePro = async (projectId: number): Promise<void> => {
     setIsUpdated(true);
     setSelectedProjectId(projectId);
