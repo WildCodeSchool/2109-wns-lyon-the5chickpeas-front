@@ -9,38 +9,124 @@ import BasicModal from "./Modal";
 import ProjectForm from "./forms/ProjectForm";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { Alert, CircularProgress, Snackbar } from "@mui/material";
-import ClearIcon from "@mui/icons-material/Clear";
-import EditIcon from "@mui/icons-material/Edit";
+import TableList from "../components/forms/Table";
 
-type projectType = {
+export interface ProjectType {
   id: number;
   manager_id: number;
   name: string;
   status_id: number;
   due_date: string;
   description: string;
-  intitial_time_estimee: number;
-};
+  inititial_time_estimee: number;
+}
+export interface Title {
+  title: string;
+}
+
+const GET_STATUS = gql`
+  query GetStatus {
+    getStatus {
+      name
+      id
+    }
+  }
+`;
+const GET_PROJECTS = gql`
+  query GetProjects {
+    getProjects {
+      id
+      name
+      description
+      dueDate
+      estimatedTime
+      status {
+        name
+      }
+      managers {
+        id
+      }
+    }
+  }
+`;
+const GET_PROJECT = gql`
+  query GetProject($getProjectId: ID!) {
+    getProject(id: $getProjectId) {
+      id
+      name
+      description
+      dueDate
+      estimatedTime
+      status {
+        name
+      }
+      managers {
+        id
+      }
+    }
+  }
+`;
+
+const DELETE_PROJECT = gql`
+  mutation DeleteProject($deleteProjectId: ID!) {
+    deleteProject(id: $deleteProjectId)
+  }
+`;
+
+const UPDATE_PROJECT = gql`
+  mutation UpdateProject($updateProjectId: ID!) {
+    updateProject(id: $updateProjectId) {
+      name
+      description
+      status {
+        name
+      }
+      managers {
+        id
+      }
+    }
+  }
+`;
 
 const ProjectsTable = () => {
   const navigation = useNavigate();
 
   const [isModal, setIsModal] = useState(false);
   const [message, setMessage] = useState("");
-  const [open, setOpen] = React.useState(false);
-  const [openAlert, setOpenAlert] = React.useState(false);
-  const [projectList, setProjectList] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [projectList, setProjectList] = useState<ProjectType[]>([]);
+  const [isUpdated, setIsUpdated] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState<number>();
+
+  const titles: Title[] = [
+    { title: "Name" },
+    { title: "Description" },
+    { title: "Status" },
+    { title: "Due Date" },
+    { title: "Time estimation" },
+    { title: "Managers" },
+    { title: "Actions" },
+  ];
 
   // Preparation de la requete GraphQL
-  const { data, loading, error, refetch } = useQuery(gql`
-    query GetProjects {
-      getProjects {
-        id
-        name
-        description
-      }
+  const { data, loading, error, refetch } = useQuery(GET_PROJECTS);
+
+  //ne pas executer la query tant que selectedProjectId est undefined
+  const { data: dataGetProject } = useQuery(GET_PROJECT, {
+    variables: {
+      getProjectId: selectedProjectId,
+    },
+    skip: selectedProjectId === undefined,
+  });
+  const { data: dataGetStatus } = useQuery(GET_STATUS);
+
+  useEffect(() => {
+    if (dataGetProject) {
+      //updatePro(selectedProjectId);
+      handleOpen();
     }
-  `);
+  }, [dataGetProject]);
 
   // Rechargement de la page
   useEffect(() => {
@@ -51,13 +137,12 @@ const ProjectsTable = () => {
   }, [data]);
 
   // Delete a project query
-  const [deleteProject] = useMutation(gql`
-    mutation DeleteProject($deleteProjectId: ID!) {
-      deleteProject(id: $deleteProjectId)
-    }
-  `);
+  const [deleteProject] = useMutation(DELETE_PROJECT);
 
-  const deletePro = async (projectId: number) => {
+  // Delete a project query
+  const [updateProject] = useMutation(UPDATE_PROJECT);
+
+  const deletePro = async (projectId: number): Promise<void> => {
     const result = await deleteProject({
       variables: { deleteProjectId: projectId },
       refetchQueries: ["GetProjects"],
@@ -68,6 +153,30 @@ const ProjectsTable = () => {
       setOpenAlert(true);
       //refetch();
     }
+  };
+  // useEffect(() => {
+  //   console.log("selectedProjectId", selectedProjectId);
+  // });
+  const updatePro = async (projectId: number): Promise<void> => {
+    setIsUpdated(true);
+    setSelectedProjectId(projectId);
+    <BasicModal open={open} handleClose={handleClose}>
+      <ProjectForm
+        dataGetStatus={dataGetStatus.getStatus}
+        dataGetProject={dataGetProject?.getProject}
+        isUpdated={isUpdated}
+        onCloseModal={() => {
+          handleCloseModal();
+        }}
+      />
+    </BasicModal>;
+    // const result = await updateProject({
+    //   variables: { updateProjectId: projectId },
+    //   refetchQueries: ["GetProjects"],
+    // });
+    // if (result.data.updateProject) {
+    //   setOpenAlert(true);
+    // }
   };
 
   const handleOpen = () => {
@@ -86,11 +195,6 @@ const ProjectsTable = () => {
     handleCloseModal();
   }, []);
 
-  // Gestion des erreurs de l'appel
-  if (error) {
-    setMessage("Une erreur est survenue, pensez à vous identifier !");
-  }
-
   return !loading || !error ? (
     <Container>
       <Snackbar
@@ -103,15 +207,18 @@ const ProjectsTable = () => {
           severity='success'
           sx={{ width: "100%" }}
         >
-          Le project a été supprimé avec succès !
+          Project has been successfully deleted!
         </Alert>
       </Snackbar>
       <div className='flex-custom flex row'>
         <h1 id='title'>Projects List</h1>
-        <ButtonCustom onClick={handleOpen}>Ajouter un projet</ButtonCustom>
+        <ButtonCustom onClick={handleOpen}>Add a project</ButtonCustom>
         {isModal && (
           <BasicModal open={open} handleClose={handleClose}>
             <ProjectForm
+              isUpdated={isUpdated}
+              dataGetProject={dataGetProject?.getProject}
+              dataGetStatus={dataGetStatus.getStatus}
               onCloseModal={() => {
                 handleCloseModal();
               }}
@@ -123,39 +230,12 @@ const ProjectsTable = () => {
       {loading ? (
         <CircularProgress />
       ) : (
-        <StyledTable id='projects'>
-          <>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Due Date</th>
-                <th>Description</th>
-                <th>Initial Time Estimee</th>
-                <th>Action(s)</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {projectList &&
-                projectList.map((project: projectType) => (
-                  <tr key={project.id}>
-                    <td>{project.name}</td>
-                    <td>{project.status_id}</td>
-                    <td>{project.due_date}</td>
-                    <td>{project.description}</td>
-                    <td>{project.intitial_time_estimee} heures</td>
-                    <td>
-                      <ClearIcon
-                        onClick={() => deletePro(project.id)}
-                      ></ClearIcon>
-                      <EditIcon></EditIcon>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </>
-        </StyledTable>
+        <TableList
+          titles={titles}
+          data={projectList}
+          onClickClear={deletePro}
+          onClickEdit={updatePro}
+        />
       )}
     </Container>
   ) : (
