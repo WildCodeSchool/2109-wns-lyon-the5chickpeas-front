@@ -111,17 +111,20 @@ const ProjectsTable = () => {
 
   // Preparation de la requete GraphQL
   const { data, loading, error, refetch } = useQuery(GET_PROJECTS);
+
+  //ne pas executer la query tant que selectedProjectId est undefined
   const { data: dataGetProject } = useQuery(GET_PROJECT, {
     variables: {
       getProjectId: selectedProjectId,
     },
+    skip: selectedProjectId === undefined,
   });
   const { data: dataGetStatus } = useQuery(GET_STATUS);
 
   useEffect(() => {
     if (dataGetProject) {
       //updatePro(selectedProjectId);
-      console.log("sorti dataGetProject", dataGetProject);
+      handleOpen();
     }
   }, [dataGetProject]);
 
@@ -157,11 +160,10 @@ const ProjectsTable = () => {
   const updatePro = async (projectId: number): Promise<void> => {
     setIsUpdated(true);
     setSelectedProjectId(projectId);
-    handleOpen();
     <BasicModal open={open} handleClose={handleClose}>
       <ProjectForm
         dataGetStatus={dataGetStatus.getStatus}
-        //dataGetProject={dataGetProject.getProject}
+        dataGetProject={dataGetProject?.getProject}
         isUpdated={isUpdated}
         onCloseModal={() => {
           handleCloseModal();
@@ -215,7 +217,7 @@ const ProjectsTable = () => {
           <BasicModal open={open} handleClose={handleClose}>
             <ProjectForm
               isUpdated={isUpdated}
-              //dataGetProject={dataGetProject.getProject(1)}
+              dataGetProject={dataGetProject?.getProject}
               dataGetStatus={dataGetStatus.getStatus}
               onCloseModal={() => {
                 handleCloseModal();

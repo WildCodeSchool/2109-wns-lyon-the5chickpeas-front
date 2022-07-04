@@ -27,12 +27,12 @@ const ProjectForm = ({
   onCloseModal,
   dataGetStatus,
   isUpdated,
-}: //dataGetProject,
-{
+  dataGetProject,
+}: {
   onCloseModal: Function;
   dataGetStatus: Array<Status>;
   isUpdated: boolean;
-  //dataGetProject: ProjectType;
+  dataGetProject: ProjectType;
 }) => {
   // Initialisation des champs pour l'entité PROJECT
   const [description, setDescription] = useState("");
